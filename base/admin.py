@@ -3,7 +3,6 @@ from django.contrib.admin import site
 import adminactions.actions as actions
 from .models import *
 from import_export.admin import ImportExportModelAdmin
-from .resources import *
 actions.add_to_site(site)
 
 
@@ -30,7 +29,6 @@ admin.site.register(Sucursal, entidad_admin)
 
 
 class producto_admin(ImportExportModelAdmin):
-    resource_class = ProductoResource
 
     fields = (('code', 'no_parte'), 'name', ('marca', 'categoria',
     'nombre_corto'), ('medida', 'modelo'), ('nauca', 'caducidad'),
