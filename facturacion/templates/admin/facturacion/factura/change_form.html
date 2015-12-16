@@ -1,0 +1,31 @@
+{% extends "admin/change_form.html" %}
+
+
+{% block extrahead %}{{ block.super }}
+{{ media }}
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script>
+
+$( document ).ready(function() {
+    $('#id_cliente-autocomplete').focusout(function(){
+
+            $.ajax({
+                type:"GET",
+                contentType:"application/json; charset=utf-8",
+                dateType:"json",
+                url:"{% url 'datos_cliente' %}",
+                data: {id:$('span').text(), csrfmiddlewaretoken:$('input[name="csrfmiddlewaretoken"]').val()},
+                success:function(response){
+                		
+			$('#id_cliente_identificacion').val(response.fields.ident);
+			$('#id_cliente_telefono').val(response.fields.telefono);
+			$('#id_cliente_direccion').val(response.fields.direccion);
+                		
+	                }
+	      	});
+
+        });
+});
+
+  </script>
+{% endblock %}
