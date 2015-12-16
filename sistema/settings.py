@@ -30,12 +30,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'daterange_filter',
+    'adminactions',
+    'grappelli',
+    'import_export',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'base',
+    'facturacion',
+    'importacion',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -90,5 +97,21 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
+
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    'apptemplates.Loader',
+)
+
+
+import django.conf.global_settings as DEFAULT_SETTINGS
+
+CUSTOM_PROCESSORS = ('django.core.context_processors.request',)
+
+TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + CUSTOM_PROCESSORS
+
+
+USE_THOUSAND_SEPARATOR = True
 
 
