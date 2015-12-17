@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'grappelli_dynamic_navbar',
     'daterange_filter',
     'adminactions',
     'grappelli',
