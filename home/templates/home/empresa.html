@@ -1,0 +1,87 @@
+{% extends "home/index.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Organización
+                <small>Mensaje de la Empresa</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="/">Inicio</a>
+                </li>
+                <li class="active">Empresa</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <img class="img-responsive" src="{{ STATIC_URL }}img/jm/portada.png">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="page-header">Organización</h2>
+            <p>John May & Co. Maquinaria Sociedad Anónima, fundada por John May Gutiérrez con su esposa Nelly May O´Reardon e hijos: John May O´Reardon, Katalina May O´Reardon, Mary Ellen González May y Geraldine Morales May, el 01 de Julio del año 1954, bajo la razón social JOHN MAY Y COMPAÑÍA que en 1976 se transforma en JOHN MAY & CO. MAQUINARIAS, S.A.
+
+John May & Co. Maquinaria Sociedad Anónima, tiene 60 años de presencia en el mercado nicaragüense, es una compañía comercializadora de equipos de transmisión de potencia, bombas de agua, motores y maquinaria agrícola como Beneficios Húmedos, Despulpadoras, Tostadoras, Cosechadoras, Pica Pasto, etc. nos distinguimos por brindar asesoría técnica a nuestros clientes ofreciéndoles servicios integrales con productos de calidad. Representamos las marcas SKF, TIMKEN, LISTER PETTER , PENAGOS, IHM, KIA, HILCO, DUNLOP, NACHI, TATU MARCHESAN, VAZEL, VOGES, entre otras.</p>
+
+        </div>
+
+        <div class="col-md-4">
+            <h2 class="page-header">Mensaje del Gerente</h2>
+            <img class="img-responsive" src="{{ STATIC_URL }}img/jm/ec.png">
+            <div align="center">
+                <br>
+                <p>
+                    <h4>Msc. Eduardo Caldera May</h4>
+                Gerente General. <br>
+                John May & Co. (Maquinarias) S.A.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <ul id="myTab" class="nav nav-tabs">
+            <li class="active"><a href="#service-one" data-toggle="tab">Visión</a></li>
+            <li><a href="#service-two" data-toggle="tab">Misión</a></li>
+            <li><a href="#service-three" data-toggle="tab">Valores</a></li>
+            <li><a href="#service-for" data-toggle="tab">Iniciativas Estratégicas</a></li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade in active" id="service-one">
+                <i class="fa fa-gear pull-left fa-4x"></i>
+                <p id="tabtext">Somos una empresa líder en la distribución de rodamientos y maquinaria, orientada al sector industrial y agrícola, hemos desarrollado un grado único de competencia en áreas complementarias como la industria, la agricultura, la ganadería, el sector manicero y cafetalero, la combinación de estas cinco áreas forman parte de nuestra capacidad para crear soluciones innovadoras, mediante el liderazgo en servicios de calidad, creación de plataformas por líneas en rodamiento, precios, rendimientos, costos y un crecimiento sostenido, con lo cual contribuimos al desarrollo de la agroindustria nicaragüense.</p>
+            </div>
+            <div class="tab-pane fade" id="service-two">
+                <i class="fa fa-gears pull-left fa-4x"></i>
+                <p id="tabtext">Apoyar el desarrollo productivo, promoviendo soluciones industriales y agrícolas acordes con la preservación del medio ambiente, impulsando el crecimiento y fortalecimiento  competitivo, contribuyendo así a la creación de fuentes de trabajo, generamos oportunidades de negocios y rentabilidad para nuestra institución.</p>
+            </div>
+            <div class="tab-pane fade" id="service-three">
+                <i class="fa fa-magic pull-left fa-4x"></i>
+                <p id="tabtext">
+                    • Escuchamos atentamente a nuestros clientes, acreedores, proveedores y colaboradores e integramos responsablemente sus opiniones en nuestra planeación e implementación de estrategias.<br>
+                    • Valoramos a nuestros clientes, ofreciéndoles los mejores rodamientos y maquinarias con alta calidad en nuestro servicio.<br>
+                    • Capacitamos y atribuimos poder a nuestros colaboradores.<br>
+                    • Brindamos a nuestros accionistas un alto rendimiento.<br>
+                    • Nos comportamos responsablemente como ciudadanos corporativos.<br>
+                </p>
+            </div>
+            <div class="tab-pane fade" id="service-for">
+                <i class="fa fa-magic pull-left fa-4x"></i>
+                <p id="tabtext">
+                    • Crecimiento de ventas. <br>
+                    • Desarrollo de nuevas líneas de productos de marca reconocida. <br>
+                    • Efectividad y eficiencia organizacional. <br>
+                    • Innovación y Tecnología. <br>
+                    • Desarrollo del Capital Humano – Capacitación. <br>
+                    • Responsabilidad Social Empresarial. <br>
+                    • Rentabilidad por productos. <br>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

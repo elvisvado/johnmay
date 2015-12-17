@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+
+<head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Solucion para la adquisicion de Rodamientos, Cadenas, Bandas, Soldaduras, Maquinarias, Esproket, Chumaseras, Grasas y Lubricantes">
+    <meta name="author" content="Cesar Ramirez, Harvy Vanegas">
+    <meta name="Keywords" content="Rodamientos, Cadenas, Bandas, Soldaduras, Maquinarias, Esproket, Chumaseras, Grasas y Lubricantes" />
+    <meta http-equiv="Content-Language" content="es"/>
+    <meta name="distribution" content="global"/>
+    <title>{% block title %}John May &amp; Co. (Maq.) S.A.{% endblock %}</title>
+    <link href="{{ STATIC_URL }}img/jm/jm-logo.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
+    <!-- CSS núcleo Bootstrap -->
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
+    <!-- Añadir CSS personalizado aquí -->
+    <link href="{{ STATIC_URL }}css/shop-homepage.css" rel="stylesheet">
+	<link href="{{ STATIC_URL }}font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/extra.css" rel="stylesheet">
+    {% endblock head %}
+</head>
+
+<body>
+    {% load tags_base %}
+    {% block body %}
+        {% block navbar %}
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Nombre Principal de la barra de Navegación -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">JohnMay &amp; Co. (Maq.) S.A.</a>
+                </div>
+
+                <!-- Recoge los enlaces de navegación, formularios y otros contenidos para alternar -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/empresa">Empresa</a></li>
+                        <li><a href="/eventos">Eventos</a></li>
+                        <li><a href="/servicios">Servicios</a></li>
+                        <li><a href="/faq">Preguntas Frecuentes</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/contact">Contacto</a></li>
+                        <li><a href="/admin">Iniciar Sesion</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        {% endblock navbar %}
+
+    <div id="content">
+        {% block content %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div align="center">
+                        <a href="/"><img class="img-responsive" src="{{ STATIC_URL }}img/jm/jm-logo.png"></a>
+                    </div>
+                    <p class="lead">Nuestros Productos</p>
+                    <div class="list-group">
+
+                        {% get_categorias as categorias %}
+
+                        <div class="panel-group" id="accordion">
+                            {% for c in categorias %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#{{ c.id }}">
+                                            {{ c.name }}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="{{ c.id }}" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        {% if c.is_parent %}
+                                            {% for h in c.childrens %}
+                                                <li>{{ h.name }}</li>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                    <div align="center">
+                        <a href="https://www.facebook.com/john.may.50702?fref=ts" target="_blank"><img class="acl-img" src="{{ STATIC_URL }}img/social/facebook-logo.png"></a>
+                        <a href="https://twitter.com/JohnmayCo" target="_blank"><img class="acl-img" src="{{ STATIC_URL }}img/social/twitter-logo.png"></a>
+                        <a href="/error" target="_blank"><img class="acl-img" src="{{ STATIC_URL }}img/social/youtube-logo.png"></a>
+                    </div>
+                    <hr>
+                </div>
+                <div class="col-md-9">
+                    <div class="row carousel-holder">
+                        <div class="col-md-12">
+                            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                                    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                                    <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+                                </ol>
+                                <div class="carousel-inner">
+                                    <div class="item active">
+                                        <img class="slide-image" src="{{ STATIC_URL }}img/carousel/01.png">
+                                    </div>
+                                    <div class="item">
+                                        <img class="slide-image" src="{{ STATIC_URL }}img/carousel/02.png">
+                                    </div>
+                                    <div class="item">
+                                        <img class="slide-image" src="{{ STATIC_URL }}img/carousel/03.png">
+                                    </div>
+                                    <div class="item">
+                                        <img class="slide-image" src="{{ STATIC_URL }}img/carousel/04.png">
+                                    </div>
+                                    <div class="item">
+                                        <img class="slide-image" src="{{ STATIC_URL }}img/carousel/05.png">
+                                    </div>
+                                </div>
+                                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </a>
+                                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4">
+                            <h3><i class="fa fa-check-circle"></i> Garantia de Fabrica</h3>
+                            <p>Ofrecemos a nuestros clientes el programa "Operación libre de problemas" maximizando de esta manera el bienestar de su empresa a través de la garantía de vida de nuestros productos.</p>
+                            <p>Respaldado por estrictos y rigurosos estandares de calidad de Fabrica que preserban una amplia durabilidad.</p>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <h3><i class="fa fa-pencil"></i> Personal calificado</h3>
+                            <p>John May &amp; Co. cuenta con personal comprometido y capacitado en todos los procesos de nuestro negocio para dar un servicio excelente a todos nuestros clientes.</p>
+                            <p>Nuestro personal esta certificado y autorizado por nuestros proveedores para una mejor atención.</p>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <h3><i class="fa fa-folder-open"></i> Asesoria &amp; Respaldo</h3>
+                            <p>Nuestra Companía tiene más de 55 Años de Experiencia en el mercado AgroIndustrial, orientada al servicio integral de la industria caracterizados por nuestra experiencia, excelencia en servicios, seriedad y honestidad, haciendo posible con ello el desarrollo de la producción nacional, por medio de nuestra atencion personalizada. Somos Distribuidores Autorizados, brindamos garantía y soporte en todos nuestros productos.</p>
+                        </div>
+                    </div>
+
+
+                    <div class="row section-colored">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <h2>SKF Distribuidor autorizado en Nicaragua</h2>
+                            <h5 class="rslt-txt">Ventajas al trabajar con nosotros</h5><br>
+                            <ul>
+                                <li>Productos garantizado</li>
+                                <li>Respaldo de Fabrica</li>
+                                <li>El mejor Precio</li>
+                                <li>Asesoria Tecnica &amp; Calidad</li>
+                                <li>Personal Capacitado</li>
+                                <!-- <li>100% <strong>Free</strong> to Use</li> -->
+                            </ul>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <img class="img-responsive" src="{{ STATIC_URL }}img/jm/skf-distribuidor-autorizado.png">
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+        {% endblock content %}
+    </div>
+
+        {% block footer %}
+        <div class="container">
+            <hr>
+            <footer>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div align="center">
+                            {% get_marcas as marcas %}
+                            {% for m in marcas %}
+                            {% if m.logo %}
+                                <a href="{{ m.url }}" target="_blank">
+                                    <img class="acl-img" src="/media/{{ m.logo }}">
+                                </a>
+                            {% endif %}
+                            {% endfor %}
+                            <hr>
+                            <p id="foot">Copyright &copy; John May &amp; Compañia 2014 all rights reserved</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        {% endblock footer %}
+
+        {% block script %}
+        <script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+        {% endblock script %}
+    {% endblock body %}
+</body>
+
+</html>

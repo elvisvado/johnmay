@@ -1,0 +1,145 @@
+{% extends "home/index.html" %}
+
+{% block content %}
+    	<div class="container">
+    		<div class="col-lg-12">
+    			<ol class="breadcrumb">
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="/contact">Contacto</a></li>
+    				<li class="active">Sucursal Chinandega</li>
+    			</ol>
+    		</div>
+    	</div>
+
+    <!--Contenedor de las columnas del diseñador-->
+    <div class="container">
+    	<div class="row">
+            <div class="col-lg-8">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Ventas</a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-9-full panel panel-default panel-heading rslt-txt color-blue" >
+                                        Asesores
+                                    </div>
+                                    <!-- Nubia Munguia-->
+                                    <div class="col-xs-6 col-sm-4 panel panel-default panel-heading">
+                                        Lic. Nubia Munguia
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 panel panel-default panel-heading">
+                                        nmunguia@johnmay.com.ni
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 panel panel-default panel-heading">
+                                        2340-4060
+                                    </div>
+                                    <!-- Marcos Espinoza-->
+                                    <div class="col-xs-6 col-sm-4 panel panel-default panel-heading">
+                                        Marcos Espinoza
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 panel panel-default panel-heading">
+                                        marcose@johnmay.com.ni
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 panel panel-default panel-heading">
+                                        8886-2079
+                                    </div>
+                                    <!-- Eliazar Jarquin-->
+                                    <div class="col-xs-6 col-sm-4 panel panel-default panel-heading">
+                                        Eliazar Jarquin
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 panel panel-default panel-heading">
+                                        e.jarquin@johnmay.com.ni
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 panel panel-default panel-heading">
+                                        8775-9469
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-9-full panel panel-default panel-heading rslt-txt color-blue" >
+                                        Telemercadeo
+                                    </div>
+                                    <!-- Gema Vargas-->
+                                    <div class="col-xs-6 col-sm-4 panel panel-default panel-heading">
+                                        Gema Vargas
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 panel panel-default panel-heading">
+                                        gema.vargas@johnmay.com.ni
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 panel panel-default panel-heading">
+                                        2340-4060
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Gerencia</a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md9-full panel panel-default panel-heading rslt-txt color-blue">
+                                        Gerente de Sucursal
+                                    </div>
+                                    <!-- Shirley Molina-->
+                                    <div class="col-xs-6 col-sm-4 panel panel-default panel-heading">
+                                        Ing. Shirley Molina
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 panel panel-default panel-heading">
+                                        smolina@johnmay.com.ni
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 panel panel-default panel-heading">
+                                        8380-1034
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="Contacto">Contacto</label>
+                        <input name="contacto" type="text" class="form-control" id="contacto" placeholder="Nombre y Apellido">
+                    </div>
+                    <div class="form-group">
+                        <label for="Tel">Telefono</label>
+                        <input name="tel" type="text" class="form-control" id="tel" placeholder="Telefono">
+                    </div>
+                    <div class="form-group">
+                        <label for="Remitente">Dirección de correo electrónico</label>
+                        <input name="remitente" type="email" class="form-control" id="Remitente" placeholder="Ingrese su correo">
+                    </div>
+                    <div class="form-group">
+                        <label for="Destinatarios">Destinatarios</label>
+                        <input name="destinatario" type="email" class="form-control" id="destinatarios" placeholder="Contacto de la Empresa">
+                    </div>
+                    <div class="form-group">
+                        <label for="Comentarios"> Comenterios</label>
+                        <textarea name="comentarios" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Acepto los terminos
+                        </label>
+                    </div>
+                    <a href="/error">Terminos legales</a>
+                    <br>
+                    </br>
+                    <button type="submit" class="btn btn-default">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End Container-->
+
+{% endblock %}

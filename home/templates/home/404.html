@@ -1,0 +1,43 @@
+{% extends "home/index.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">404
+                    <small>Página no encontrada</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="/">John May &amp; Co. (Maq.) S.A.</a>
+                    </li>
+                    <li class="active">404</li>
+                </ol>
+            </div>
+        </div>
+        <div class="section-colored">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <img class="img-responsive" src="{{ STATIC_URL }}img/jm/pag_construccion.gif">
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <p class="lead">La página que está buscando no se pudo encontrar.</p>
+                        <p>Estos son algunos enlaces útiles para ayudarle a encontrar lo que está buscando:</p>
+                        <ul>
+                            <li><a href="/">Inicio</a></li>
+                            <li><a href="/empresa">Empresa</a></li>
+                            <li><a href="https://www.facebook.com/john.may.50702?fref=ts" target="_blank">Facebook</a></li>
+                            <li><a href="https://twitter.com/JohnmayCo" target="_blank">Twitter</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /.section-colored -->
+    </div>
+    <!-- /.container -->
+
+{% endblock %}
