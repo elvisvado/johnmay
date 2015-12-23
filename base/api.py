@@ -146,7 +146,7 @@ def get_documento(obj):
 def get_detalle(obj):
     dd = Detalle()
     dd.documento = get_documento(obj)
-    dd.bodega, created = get_or_create_entidad(Bodega(),
+    dd.bodega = get_or_create_entidad(Bodega(),
         name=obj.documento_bodega)
     dd.sucursal = get_or_create_entidad(Sucursal(), obj.documento_sucursal)
     dd.producto = get_producto(obj)
