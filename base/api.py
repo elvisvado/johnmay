@@ -146,8 +146,9 @@ def get_documento(obj):
 def get_detalle(obj):
     dd = Detalle()
     dd.documento = get_documento(obj)
-    dd.bodega, created = Bodega.objects.get_or_create(name=obj.documento_bodega,
-        sucursal=get_or_create_entidad(Sucursal(), obj.documento_sucursal))
+    dd.bodega, created = get_or_create_entidad(Bodega(),
+        name=obj.documento_bodega)
+    dd.sucursal = get_or_create_entidad(Sucursal(), obj.documento_sucursal)
     dd.producto = get_producto(obj)
     dd.producto_cantidad = obj.producto_cantidad
     dd.producto_precio_unitario = obj.producto_precio

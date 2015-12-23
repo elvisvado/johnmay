@@ -44,7 +44,7 @@ class Sucursal(Entidad):
 
 
 class Bodega(Entidad):
-    sucursal = models.ForeignKey(Sucursal)
+    sucursal = models.ForeignKey(Sucursal, null=True)
 
 
 User.add_to_class('sucursal', models.ForeignKey(Sucursal, null=True))
