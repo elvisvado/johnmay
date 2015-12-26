@@ -2,9 +2,11 @@ from django.db import models
 
 
 class Producto(models.Model):
+    bodega = models.CharField(max_length=60, null=True)
     codigo = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=250)
-    marca = models.CharField(max_length=30)
+    marca = models.CharField(max_length=60)
+    categoria = models.CharField(max_length=60)
     rack = models.CharField(max_length=4)
     columna = models.CharField(max_length=2)
     fila = models.CharField(max_length=2)
