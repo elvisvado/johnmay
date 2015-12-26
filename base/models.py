@@ -202,6 +202,9 @@ class Documento(models.Model):
         if self.detalle():
             for d in self.detalle():
                 d.aplicar()
+        self.aplicado = True
+        self.save()
+        return self
 
     def calcular(self):
         if self.detalle():
@@ -263,7 +266,7 @@ class Detalle(models.Model):
         self.producto_saldo = e.existencia_disponible
         e.save()
         self.save()
-        return e
+        return self
 
     def calcular(self):
         self.precio_total = totalizar(self.cantidad, self.precio_unitario)
