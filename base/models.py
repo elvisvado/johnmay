@@ -266,7 +266,9 @@ class Detalle(models.Model):
         self.producto_saldo = e.existencia_disponible
         e.save()
         self.save()
-        print '%s %s' % (str(self.producto_cantidad), self.producto.name)
+        print '%s - %s - %s - %s' % (str(self.documento.fecha),
+            str(self.producto_cantidad), self.producto.name,
+            self.bodega.name)
         return self
 
     def calcular(self):
