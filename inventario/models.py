@@ -16,6 +16,8 @@ class Producto(models.Model):
     conteo2 = models.FloatField(null=True, blank=True, default=0.0)
     conteo3 = models.FloatField(null=True, blank=True, default=0.0)
     con_diferencia = models.BooleanField(default=True)
+    diferencia_cantidad = models.FloatField(null=True, blank=True, default=0.0)
+    diferencia_importe = models.FloatField(null=True, blank=True, default=0.0)
 
     def __unicode__(self):
         return self.codigo + ' - ' + self.descripcion
@@ -32,7 +34,23 @@ class Producto(models.Model):
             return False
         return True
 
+    def get_diferencia_cantidad(self):
+        if self.con_diferencia:
+            minima = abs(self.existencia - self.conteo1)
+            if minima > abs(self.existencia - self.conteo2):
+                minima = abs(self.existencia - self.conteo2)
+            if minima > abs(self.existencia - self.conteo3):
+                minima = abs(self.existencia - self.conteo3)
+            return minima
+        else:
+            return 0.0
+
+    def get_diferencia_importe(self):
+        return round(self.get_diferencia_cantidad() * self.costo, 2)
+
     def save(self, *args, **kwargs):
         self.con_diferencia = self.verificar_diferencia()
+        self.diferencia_cantidad = self.get_diferencia_cantidad()
+        self.diferencia_importe = self.get_diferencia_importe()
         super(Producto, self).save()
 

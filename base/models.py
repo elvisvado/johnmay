@@ -272,7 +272,10 @@ class Detalle(models.Model):
         return self
 
     def calcular(self):
-        self.precio_total = totalizar(self.cantidad, self.precio_unitario)
-        self.descuento_total = totalizar(self.cantidad, self.descuento_unitario)
-        self.costo_total = totalizar(self.cantidad, self.costo_unitario)
+        self.precio_total = totalizar(self.producto_cantidad,
+            self.producto_precio_unitario)
+        self.descuento_total = totalizar(self.producto_cantidad,
+            self.producto_descuento_unitario)
+        self.costo_total = totalizar(self.producto_cantidad,
+            self.producto_costo_unitario)
         self.save()
