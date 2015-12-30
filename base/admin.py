@@ -3,6 +3,7 @@ from django.contrib.admin import site
 import adminactions.actions as actions
 from .models import *
 from import_export.admin import ImportExportModelAdmin
+from django.core.context_processors import csrf
 actions.add_to_site(site)
 
 
@@ -40,6 +41,40 @@ class producto_admin(ImportExportModelAdmin):
     list_filter = ('marca', 'categoria', 'clasificacion')
     search_fields = ('code', 'name', 'no_parte', 'marca__name',
         'categoria__name')
+
+    actions = ['generar_kardex']
+
+    class kardex_form(forms.Form):
+        _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
+        fecha_inicial = forms.DateField()
+        fecha_final = forms.DateField()
+        bodega = forms.ModelChoiceField(queryset=Bodega.objects.all())
+
+    def generar_kardex(self, request, queryset):
+        form = None
+        if 'apply' in request.POST:
+            form = self.kardex_form(request.POST)
+            if form.is_valid():
+                fecha_inicial = form.cleaned_data['fecha_inicial']
+                fecha_final = form.cleaned_data['fecha_final']
+                bodega = form.cleaned_data['bodega']
+                for c in queryset:
+                    ds = Detalle.objects.filter(producto=c, bodega=bodega
+                    ).order_by('documento__fecha')
+                data = {'form': form, 'kardex': ds}
+                data.update(csrf(request))
+                return render_to_response('base/kardex_producto.html', data)
+        if not form:
+            form = self.kardex_form(
+                initial={
+                    '_selected_action': request.POST.getlist(
+                        admin.ACTION_CHECKBOX_NAME)})
+        data = {'ciclos': queryset, 'form': form}
+        data.update(csrf(request))
+        return render_to_response('base/kardex_form.html', data)
+
+    generar_kardex.short_description = \
+    "Generar kardex del producto seleccionado"
 admin.site.register(Producto, producto_admin)
 
 

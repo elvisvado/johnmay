@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "Metropolitana Distribucion">
+<html>
+    <head>
+        <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+        <link href="/static/metropolitana/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="/static/metropolitana/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+    </head>
+    <body>
+    <div class="container">
+        <div class="well">
+            <table class="table table-hover table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Tipo de Documento</th>
+                        <th>Numero</th>
+                        <th>Cantidad</th>
+                    <tr>
+                </thead>
+                <tbody>
+                {% for d in kardex %}
+                <tr>
+                    <td>{{d.documento.fecha}}</td>
+                    <td>{{d.documento.tipodoc.name}}</td>
+                    <td>{{d.documento.numero}}</td>
+                    <td>{{d.cantidad}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </body>
+</html>

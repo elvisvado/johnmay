@@ -117,6 +117,10 @@ class Existencia(models.Model):
     existencia_real = models.FloatField(default=0.0)
     ubicacion = models.CharField(max_length=15, null=True, blank=True)
 
+    def __unicode__(self):
+        return "%s %s %s" % (self.producto.name, self.bodega.name,
+            str(self.cantidad)
+
     class Meta:
         verbose_name_plural = "Existencias en bodega"
 

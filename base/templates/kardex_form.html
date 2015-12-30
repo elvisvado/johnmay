@@ -1,0 +1,17 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+
+<p>Elija los datos del kardex que desea generar:</p>
+
+<form action="" method="post">
+
+    {% csrf_token %}
+
+    {{ form }}
+
+    <input type="hidden" name="action" value="generar_kardex" />
+    <input type="submit" name="apply" value="Generar Kardex" />
+</form>
+
+{% endblock %}
