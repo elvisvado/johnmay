@@ -169,6 +169,7 @@ TIPOS_AFECTACION = (
 
 class TipoDoc(Entidad):
     afectacion = models.IntegerField(choices=TIPOS_AFECTACION)
+    afecta_costo = models.NullBooleanField()
 
 
 class Documento(models.Model):
