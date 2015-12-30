@@ -105,7 +105,7 @@ class Producto(Entidad):
     def existencia_total(self):
         if self.existencias():
             return self.existencias().aggregate(
-                Sum('existencia'))['existencia_disponible__sum']
+                Sum('existencia_disponible'))['existencia_disponible__sum']
         else:
             return 0
 
