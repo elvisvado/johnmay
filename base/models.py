@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from .base import *
+from django.db.models import Sum
+from .api import totalizar
 
 
 class Entidad(base_entidad):
