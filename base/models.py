@@ -2,7 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from .base import *
 from django.db.models import Sum
-from .api import totalizar
+
+
+def totalizar(a, b):
+    try:
+        return round(a * b, 2)
+    except:
+        return 0.0
 
 
 class Entidad(base_entidad):
