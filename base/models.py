@@ -219,11 +219,11 @@ class Documento(models.Model):
             for d in self.detalle():
                 d.calcular()
             self.subtotal = round(self.detalle().aggregate(Sum(
-                'precio_total'))['sum__precio_total'], 2)
+                'precio_total'))['precio_total__sum'], 2)
             self.descuento = round(self.detalle().aggregate(Sum(
-                'descuento_total'))['sum__descuento_total'], 2)
+                'descuento_total'))['descuento_total__sum'], 2)
             self.costo = round(self.detalle().aggregate(Sum(
-                'costo_total'))['sum__costo_total'], 2)
+                'costo_total'))['costo_total__sum'], 2)
             self.iva = round((self.subtotal - self.descuento) * 0.15, 2)
             self.total = round((self.subtotal - self.descuento + self.iva - (
                 self.ir + self.al)), 2)
