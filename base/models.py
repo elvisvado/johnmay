@@ -279,7 +279,7 @@ class Detalle(models.Model):
             self.producto.save()
         else:
             value = self.producto.costo
-        return value
+        return round(value, 2)
 
     def aplicar(self):
         self.calcular()
