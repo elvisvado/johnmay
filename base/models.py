@@ -211,6 +211,7 @@ class Documento(models.Model):
         if self.detalle():
             for d in self.detalle():
                 d.aplicar()
+        self.calcular()
         self.aplicado = True
         self.save()
         return self
@@ -268,7 +269,18 @@ class Detalle(models.Model):
             self.documento.numero, self.producto.code,
             self.producto.name)
 
+    def get_costo_promedio(self):
+        value = 0
+        if self.documento.tipodoc.afecta_costo:
+            value = ((self.producto.existencia_total() * self.producto.costo)
+            + (self.producto_cantidad * self.producto_costo_unitario)) / (
+                self.cantidad + self.producto.existencia_total())
+        else:
+            value = self.producto.costo
+        return value
+
     def aplicar(self):
+        self.calcular()
         e, created = Existencia.objects.get_or_create(producto=self.producto,
             bodega=self.bodega)
         self.producto_existencia = e.existencia_disponible
@@ -276,6 +288,7 @@ class Detalle(models.Model):
         (self.producto_cantidad * self.documento.tipodoc.afectacion)
         self.producto_saldo = e.existencia_disponible
         e.save()
+        self.producto_costo_promedio = self.get_costo_promedio()
         self.save()
         print '%s - %s - %s - %s' % (str(self.documento.fecha),
             str(self.producto_cantidad), self.producto.name,
