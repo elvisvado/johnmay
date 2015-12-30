@@ -276,15 +276,15 @@ class Detalle(models.Model):
     def get_costo_promedio(self):
         value = 0
         if self.documento.tipodoc.afecta_costo:
-            value = round((self.producto.existencia_total() * self.producto.costo)
+            value = ((self.producto.existencia_total() * self.producto.costo)
             + (self.producto_cantidad * self.producto_costo_unitario)) / (
-                self.producto_cantidad + self.producto.existencia_total(), 2)
+                self.producto_cantidad + self.producto.existencia_total())
             self.producto.costo = round(value, 2)
             self.producto.save()
         else:
             value = self.producto.costo
             self.producto_costo_unitario = self.producto.costo
-        return value
+        return round(value, 2)
 
     def aplicar(self):
         self.calcular()
