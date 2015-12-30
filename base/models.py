@@ -119,7 +119,7 @@ class Existencia(models.Model):
 
     def __unicode__(self):
         return "%s %s %s" % (self.producto.name, self.bodega.name,
-            str(self.cantidad)
+            str(self.cantidad))
 
     class Meta:
         verbose_name_plural = "Existencias en bodega"
