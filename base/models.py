@@ -275,6 +275,8 @@ class Detalle(models.Model):
             value = ((self.producto.existencia_total() * self.producto.costo)
             + (self.producto_cantidad * self.producto_costo_unitario)) / (
                 self.cantidad + self.producto.existencia_total())
+            self.producto.costo = value
+            self.producto.save()
         else:
             value = self.producto.costo
         return value
