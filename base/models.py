@@ -289,3 +289,18 @@ class Detalle(models.Model):
         self.costo_total = totalizar(self.producto_cantidad,
             self.producto_costo_unitario)
         self.save()
+
+
+class tasa_cambio(models.Model):
+    oficial = Models.FloatField(default=0.0)
+    venta = Models.FloatField(default=0.0)
+    compra = Models.FloatField(default=0.0)
+
+    fecha = Models.DateField()
+    registro = Models.DateTimeField()
+
+    user = Models.ForeignKey(User)
+
+    class Meta:
+        verbose_name_plural = "mesa de cambio del sistema"
+        verbose_name = "Registro"
