@@ -15,7 +15,11 @@
                         <th>Fecha</th>
                         <th>Tipo de Documento</th>
                         <th>Numero</th>
+                        <th>Existencia</th>
                         <th>Cantidad</th>
+                        <th>Costo Unitario</th>
+                        <th>Saldo</th>
+                        <th>Costo Promedio</th>
                     <tr>
                 </thead>
                 <tbody>
@@ -24,7 +28,11 @@
                     <td>{{d.documento.fecha}}</td>
                     <td>{{d.documento.tipodoc.name}}</td>
                     <td>{{d.documento.numero}}</td>
-                    <td>{{d.cantidad}}</td>
+                    <td>{{d.producto_existencia}}</td>
+                    <td>{{d.producto_cantidad}}</td>
+                    <td>{{d.producto_costo_unitario}}</td>
+                    <td>{{d.producto_saldo}}</td>
+                    <td>{{d.producto_costo_promedio}}</td>
                 </tr>
                 {% endfor %}
                 </tbody>
