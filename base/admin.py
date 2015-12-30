@@ -82,3 +82,9 @@ class vendedor_admin(admin.ModelAdmin):
 admin.site.register(Vendedor, vendedor_admin)
 
 admin.site.register(TipoDoc, entidad_admin)
+
+
+class tc_admin(ImportExportModelAdmin):
+    date_hierarchy = 'fecha'
+    list_display = ('fecha', 'oficial', 'compra', 'venta')
+admin.site.register(tasa_cambio, tc_admin)
