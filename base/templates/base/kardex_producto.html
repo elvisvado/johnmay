@@ -24,7 +24,8 @@
                 </thead>
                 <tbody>
                 {% for d in kardex %}
-                <tr>
+                <tr {% if d.documento.tipodoc.afectacion == 1 %}class="success" {% endif %}
+                        {% if d.documento.tipodoc.afectacion == -1 %}class="danger" {% endif %}>
                     <td>{{d.documento.fecha}}</td>
                     <td>{{d.documento.tipodoc.name}}</td>
                     <td>{{d.documento.numero}}</td>
