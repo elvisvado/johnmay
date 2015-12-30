@@ -229,8 +229,10 @@ class Documento(models.Model):
                 self.ir + self.al)), 2)
             self.utilidad = round((self.subtotal - self.descuento) - self.costo,
                 2)
-            self.factor = round((self.subtotal - self.descuento) / self.costo,
-                1)
+            if self.costo > 0:
+                self.factor = round((
+                    self.subtotal - self.descuento) / self.costo,
+                    1)
             self.save()
 
 
