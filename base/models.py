@@ -292,14 +292,14 @@ class Detalle(models.Model):
 
 
 class tasa_cambio(models.Model):
-    oficial = Models.FloatField(default=0.0)
-    venta = Models.FloatField(default=0.0)
-    compra = Models.FloatField(default=0.0)
+    oficial = models.FloatField(default=0.0)
+    venta = models.FloatField(default=0.0)
+    compra = models.FloatField(default=0.0)
 
-    fecha = Models.DateField()
-    registro = Models.DateTimeField()
+    fecha = models.DateField()
+    registro = models.DateTimeField()
 
-    user = Models.ForeignKey(User)
+    user = models.ForeignKey(User)
 
     class Meta:
         verbose_name_plural = "mesa de cambio del sistema"
