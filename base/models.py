@@ -299,7 +299,7 @@ class tasa_cambio(models.Model):
     fecha = models.DateField()
     registro = models.DateTimeField()
 
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "mesa de cambio del sistema"
