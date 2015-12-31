@@ -280,12 +280,12 @@ class Detalle(models.Model):
         value = 0
         if self.documento.tipodoc.afecta_costo:
             if self.producto.existencia_total() > 0:
-                value = ((self.producto.existencia_total() * self.producto.costo)
+                value = ((self.producto_existencia * self.producto.costo)
                 + (self.producto_cantidad * self.producto_costo_unitario)) / (
                     self.producto_cantidad + self.producto.existencia_total())
             else:
                 value = self.producto_costo_unitario
-            self.producto.costo = round(value, 2)
+            self.producto.costo = value
             self.producto.save()
         else:
             value = self.producto.costo
