@@ -7,6 +7,7 @@
         <script src="/static/base/js/bootstrap.min.js"></script>
     </head>
     <body>
+    {% load humanize %}
     <div class="container">
         <div class="well">
             <table class="table table-hover table-striped table-bordered">
@@ -30,7 +31,7 @@
                     <td>{{d.documento.tipodoc.name}}</td>
                     <td>{{d.documento.numero}}</td>
                     <td>{{d.producto_existencia}}</td>
-                    <td>{{d.producto_cantidad}}</td>
+                    <td>{% if d.documento.tipodoc.afectacion == -1 %}-{% endif %}{{d.producto_cantidad}}</td>
                     <td>{{d.producto_costo_unitario}}</td>
                     <td>{{d.producto_saldo}}</td>
                     <td>{{d.producto_costo_promedio}}</td>

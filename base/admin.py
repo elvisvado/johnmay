@@ -48,8 +48,8 @@ class producto_admin(ImportExportModelAdmin):
 
     class kardex_form(forms.Form):
         _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
-        fecha_inicial = forms.DateField()
-        fecha_final = forms.DateField()
+        fecha_inicial = forms.DateField(required=False)
+        fecha_final = forms.DateField(required=False)
         bodega = forms.ModelChoiceField(queryset=Bodega.objects.all())
 
     def generar_kardex(self, request, queryset):

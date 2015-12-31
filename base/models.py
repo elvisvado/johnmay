@@ -54,6 +54,9 @@ class Sucursal(Entidad):
 class Bodega(Entidad):
     sucursal = models.ForeignKey(Sucursal, null=True)
 
+    class Meta:
+        ordering = ['name', ]
+
 
 User.add_to_class('sucursal', models.ForeignKey(Sucursal, null=True))
 
@@ -276,9 +279,12 @@ class Detalle(models.Model):
     def get_costo_promedio(self):
         value = 0
         if self.documento.tipodoc.afecta_costo:
-            value = ((self.producto.existencia_total() * self.producto.costo)
-            + (self.producto_cantidad * self.producto_costo_unitario)) / (
-                self.producto_cantidad + self.producto.existencia_total())
+            if self.producto.existencia_total() > 0:
+                value = ((self.producto.existencia_total() * self.producto.costo)
+                + (self.producto_cantidad * self.producto_costo_unitario)) / (
+                    self.producto_cantidad + self.producto.existencia_total())
+            else:
+                value = self.producto_costo_unitario
             self.producto.costo = round(value, 2)
             self.producto.save()
         else:
