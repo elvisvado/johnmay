@@ -282,7 +282,7 @@ class Detalle(models.Model):
             if self.producto_existencia > 0:
                 value = ((self.producto_existencia * self.producto.costo)
                 + (self.producto_cantidad * self.producto_costo_unitario)) / (
-                    self.producto_cantidad + self.producto.existencia_total())
+                    self.producto_cantidad + self.producto_existencia)
             else:
                 value = self.producto_costo_unitario
             self.producto.costo = value
