@@ -31,6 +31,9 @@
 
         </style>
         <script>
+            function quitar(e){
+                $(this).parent().parent().remove();
+            }
             function add_detail_product() {
                 $("#myModal").modal('hide');
                 var row = '<tr row=1>';
@@ -60,9 +63,6 @@
                 } else {
                     add_detail_product();
                 }
-            }
-            function quitar(e){
-                $(this).parent().parent().remove();
             }
         </script>
     </head>
