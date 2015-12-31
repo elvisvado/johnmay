@@ -31,8 +31,8 @@
 
         </style>
         <script>
-            function quitar(e){
-                $(this).parent().parent().remove();
+            function quitar(){
+                $("#productos tr:last").remove();
             }
             function add_detail_product() {
                 $("#myModal").modal('hide');
@@ -44,7 +44,7 @@
                 row += '<td><input type="input" id="id_producto_descuento" class="form-control" value=0 onchange="calcular()" name="producto_descuento"></td>';
                 row += '<td><input type="input" id="id_total" class="form-control" value="' + $('#modal_precio').val() + '" onchange="calcular()" readonly name="producto_total"></td>'
                 row += '<td>';
-                row += '<a class="btn glyphicon glyphicon-remove remove" onclick="quitar();"></a>';
+                row += '<a class="btn glyphicon glyphicon-remove remove"></a>';
                 row += '<input type="hidden" id="producto_id" value=' + $('#modal_id').val() + ' name="producto"></input>';
                 row += '<input type="hidden" id="bodega_id" value=' + $('#modal_bodega').val() + ' name="bodega"></input>';
                 row += '</td>';
@@ -182,7 +182,7 @@
                 </div>
                 <div class="row">
                     <button type="submit" class="btn btn-success">Grabar</button>
-                    <button type="reset" class="btn btn-danger" value="Borrar">Borrar    </button>
+                    <button type="button" class="btn btn-danger" value="Borrar" onclick="quitar()">Borrar    </button>
                 </div>
                 <!-- Modal  -->
                 <div class="modal fade" id="myModal" role="dialog">
