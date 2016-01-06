@@ -36,12 +36,12 @@ class Producto(models.Model):
 
     def get_diferencia_cantidad(self):
         if self.con_diferencia:
-            minima = abs(self.existencia - self.conteo1)
-            value = -(self.existencia - self.conteo1)
-            if minima > abs(self.existencia - self.conteo2):
-                value = -(self.existencia - self.conteo2)
-            if minima > abs(self.existencia - self.conteo3):
-                value = -(self.existencia - self.conteo3)
+            minima = abs(float(self.existencia) - float(self.conteo1))
+            value = -(float(self.existencia) - float(self.conteo1))
+            if minima > abs(float(self.existencia) - float(self.conteo2)):
+                value = -(float(self.existencia) - float(self.conteo2))
+            if minima > abs(float(self.existencia) - float(self.conteo3)):
+                value = -(float(self.existencia) - float(self.conteo3))
             return value
         else:
             return 0.0
