@@ -9,5 +9,10 @@ class producto_admin(ImportExportModelAdmin):
         'con_diferencia')
     list_filter = ('bodega', 'rack', 'con_diferencia')
     list_editable = ('conteo1', 'conteo2', 'conteo3')
+    actions = ['action_evaluar']
+
+    def action_evaluar(self, request, queryset):
+        for obj in queryset:
+            obj.evaluar()
 
 admin.site.register(Producto, producto_admin)
