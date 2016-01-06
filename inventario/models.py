@@ -50,8 +50,8 @@ class Producto(models.Model):
         return round(self.get_diferencia_cantidad() * self.costo, 2)
 
     def save(self, *args, **kwargs):
-        self.con_diferencia = self.verificar_diferencia()
-        self.diferencia_cantidad = self.get_diferencia_cantidad()
-        self.diferencia_importe = self.get_diferencia_importe()
+        #self.con_diferencia = self.verificar_diferencia()
+        #self.diferencia_cantidad = self.get_diferencia_cantidad()
+        #self.diferencia_importe = self.get_diferencia_importe()
         super(Producto, self).save()
 
