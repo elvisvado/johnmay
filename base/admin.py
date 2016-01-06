@@ -33,8 +33,8 @@ admin.site.register(Sucursal, entidad_admin)
 
 class producto_admin(ImportExportModelAdmin):
 
-    fields = (('code', 'no_parte'), 'name', ('marca', 'categoria',
-    'nombre_corto'), ('medida', 'modelo'), ('nauca', 'caducidad'),
+    fields = (('code', 'no_parte'), 'name', ('marca', 'categoria'),
+        ('medida', 'modelo'), ('nauca', 'caducidad'),
         ('costo', 'precio', 'tc'), ('excento', 'almacena', 'vende',
             'compra', 'activo'))
 
