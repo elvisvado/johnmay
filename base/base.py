@@ -79,7 +79,7 @@ class base_entidad(base):
 
 class base_documento(base):
     documento_fecha = models.DateTimeField(null=True, blank=True)
-    documento_numero = models.CharField(max_length=10, null=True, blank=True)
+    documento_numero = models.IntegerField(null=True, blank=True)
     documento_tipo = models.CharField(max_length=75, null=True, blank=True)
     documento_afectacion = models.CharField(max_length=75, null=True,
         blank=True)
