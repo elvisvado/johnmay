@@ -96,11 +96,11 @@ admin.site.register(TipoPago)
 
 
 class cliente_admin(entidad_admin):
-    def get_queryset(self, request):
-        qs = super(cliente_admin, self).queryset(request)
-        if request.user.is_superuser:
-            return qs
-        return qs.filter(vendedor=request.user)
+    #def get_queryset(self, request):
+        #qs = super(cliente_admin, self).queryset(request)
+        #if request.user.is_superuser:
+            #return qs
+        #return qs.filter(vendedor=request.user)
     list_display = ('code', 'name', 'identificacion', 'telefono', 'direccion')
     fields = ('code', 'name', 'identificacion', 'telefono',
         'email', 'direccion')
