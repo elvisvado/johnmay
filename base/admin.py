@@ -106,6 +106,7 @@ class cliente_admin(entidad_admin):
         'email', 'direccion')
     readonly_fields = ('code',)
     list_filter = ('user', 'activo')
+    search_fields = ('code', 'name', 'identificacion')
 
 admin.site.register(Cliente, cliente_admin)
 
