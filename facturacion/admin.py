@@ -57,8 +57,7 @@ class FacturaAdmin(admin.ModelAdmin):
         'user', 'sucursal', 'tipodoc')
     list_filter = (('fecha', DateRangeFilter), 'sucursal', 'user',
         'tipopago', 'tipodoc')
-    search_fields = ('numero', 'sucursal__name', 'cliente__name',
-        'cliente__ident', 'user__username')
+    search_fields = ('numero', )
     raw_id_fields = ('cliente', )
     autocomplete_lookup_fields = {
         'fk': ['cliente', ],
