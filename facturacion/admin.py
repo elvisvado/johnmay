@@ -26,12 +26,12 @@ class DetalleFactura(base_tabular):
 class FacturaAdmin(admin.ModelAdmin):
     def get_readonly_fields(self, request, obj=None):
             if obj and obj.aplicado:
-                return ('numero', 'fecha', 'tipopago',
+                return ('fecha', 'tipopago',
         'fecha_vence', 'comentarios', 'cliente',
         'subtotal', 'costo', 'descuento', 'utilidad', 'iva', 'ir', 'al'
         'total', 'saldo', 'factor')
             else:
-                return ('numero', 'fecha', 'fecha_vence', 'subtotal', 'costo',
+                return ('fecha', 'fecha_vence', 'subtotal', 'costo',
                     'descuento', 'utilidad', 'iva', 'ir', 'al', 'total',
                     'saldo', 'factor')
 
