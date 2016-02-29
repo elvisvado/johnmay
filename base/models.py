@@ -208,7 +208,7 @@ class Documento(models.Model):
     aplicado = models.BooleanField(default=False)
     contabilizado = models.BooleanField(default=False)
 
-    cliente = models.ForeignKey(Cliente, null=True)
+    cliente = models.ForeignKey(Cliente, null=True, blank=True)
 
     def __unicode__(self):
         return '%s - %s' % (self.tipodoc.name, self.numero)
