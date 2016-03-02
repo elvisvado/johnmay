@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from .base import *
 from django.db.models import Sum
+from datetime import datetime
 
 
 def totalizar(a, b):
@@ -188,7 +189,7 @@ class Documento(models.Model):
     tipopago = models.ForeignKey(TipoPago, null=True, blank=True)
     tipodoc = models.ForeignKey(TipoDoc, null=True)
     sucursal = models.ForeignKey(Sucursal)
-    fecha = models.DateTimeField()
+    fecha = models.DateTimeField(auto_now_add=True)
     fecha_vence = models.DateField(null=True, blank=True)
     comentarios = models.TextField(max_length=150, null=True, blank=True)
 
