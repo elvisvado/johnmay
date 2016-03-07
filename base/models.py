@@ -189,7 +189,7 @@ class Documento(models.Model):
     tipopago = models.ForeignKey(TipoPago, null=True, blank=True)
     tipodoc = models.ForeignKey(TipoDoc, null=True)
     sucursal = models.ForeignKey(Sucursal)
-    fecha = models.DateTimeField(auto_now_add=True)
+    fecha = models.DateTimeField()
     fecha_vence = models.DateField(null=True, blank=True)
     comentarios = models.TextField(max_length=150, null=True, blank=True)
 
