@@ -93,7 +93,7 @@ def get_cliente(obj):
             c = Cliente.objects.filter(name=obj.cliente_nombre)[0]
         except:
             c, created = Cliente.objects.get_or_create(
-                name=self.cliente_nombre)
+                name=obj.cliente_nombre)
     c.name = devolver_mayor(c.name, obj.cliente_nombre)
     c.identificacion = devolver_mayor(c.identificacion,
         obj.cliente_identificacion)
