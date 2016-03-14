@@ -51,17 +51,7 @@
 
 <script>
     var test_data = {'dato 1': 1, 'dato 2': 2, 'dato 3': 3, };
-    var negative_test_data = new d3.range(0,3).map(function(d,i) {
-        return {
-            key: 'Stream' + i,
-            values: new d3.range(0,11).map( function(f,j) {
-                return {
-                    y: 10 + Math.random()*100 * (Math.floor(Math.random()*100)%2 ? 1 : -1),
-                    x: j
-                }
-            })
-        };
-    });
+    var negative_test_data = {'dato 1': 1, 'dato 2': 2, 'dato 3': 3, };
     var chart;
     nv.addGraph(function() {
         chart = nv.models.multiBarChart()
