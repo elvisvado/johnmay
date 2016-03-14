@@ -50,13 +50,7 @@
 </div>
 
 <script>
-    var test_data = stream_layers(3,10+Math.random()*100,.1).map(function(data, i) {
-        return {
-            key: 'Stream' + i,
-            values: data
-        };
-    });
-    console.log('td',test_data);
+    var test_data = {'dato 1': 1, 'dato 2': 2, 'dato 3': 3, };
     var negative_test_data = new d3.range(0,3).map(function(d,i) {
         return {
             key: 'Stream' + i,
