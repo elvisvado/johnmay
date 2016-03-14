@@ -51,7 +51,11 @@
 
 <script>
     var test_data = {"dato 1": 1, "dato 2": 2, "dato 3": 3, };
-    var negative_test_data = [{"key": "data 1", "values":{"y": 1, "x": 2}},];
+    var negative_test_data = [
+        {key: "data 1", values:{"y": 1, "x": 2}},
+        {key: "data 2", values:{"y": 1, "x": 2}},
+        {key: "data 3", values:{"y": 1, "x": 2}},
+        ];
     var chart;
     nv.addGraph(function() {
         chart = nv.models.multiBarChart()
