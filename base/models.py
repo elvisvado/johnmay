@@ -181,6 +181,16 @@ class TipoDoc(Entidad):
     kardex_global = models.NullBooleanField(
         verbose_name="aparece en kardex global")
 
+    def factura(self):
+        f, created = Tipodoc.objects.get_or_create(code='0001', name='FACTURA')
+        return f
+
+
+class ManagerFactura(models.Manager):
+    def get_queryset(self):
+        return super(ManagerFactura, self).get_queryset(
+            ).filter(tipodoc=Tipodoc().factura())
+
 
 class Documento(models.Model):
 
@@ -210,6 +220,9 @@ class Documento(models.Model):
     contabilizado = models.BooleanField(default=False)
 
     cliente = models.ForeignKey(Cliente, null=True, blank=True)
+
+    objects = models.Manager()
+    facturas = ManagerFactura()
 
     def __unicode__(self):
         return '%s - %s' % (self.tipodoc.name, self.numero)
@@ -334,3 +347,23 @@ class tasa_cambio(models.Model):
     class Meta:
         verbose_name_plural = "mesa de cambio del sistema"
         verbose_name = "Registro"
+
+
+class Estadistica(models.Model):
+    year = models.PositiveIntegerField(null=True)
+    month = models.PositiveIntegerField(null=True)
+
+    def save(self):
+        pass
+
+    def facturas(self):
+        return Documento.facturas.filter(fecha__year=self.year,
+            fecha__month=self.month)
+
+    def subtotal(self):
+        return self.facturas().aggregate(Sum('subtotal'))['subtotal__sum']
+
+    def by_user(self):
+        return self.facturas().order_by('user').distinct(
+            'user').aggregate(Sum('subtotal'))
+
