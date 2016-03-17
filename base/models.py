@@ -364,6 +364,15 @@ class Estadistica(models.Model):
         return self.facturas().aggregate(Sum('subtotal'))['subtotal__sum']
 
     def by_user(self):
-        return self.facturas().order_by('user').distinct(
-            'user').aggregate(Sum('subtotal'))
+        data = []
+        users = self.facturas().order_by('user').distinct('user')
+        for u in users:
+            obj = {}
+            obj['usuario'] = u.user.username
+            obj['facturas'] = self.facturas().filter(user=u.user)
+            obj['subtotal'] = obj['facturas'].aggregate(
+                Sum('subtotal'))['subtotal__sum']
+            data.append(obj)
+        return data
+
 
