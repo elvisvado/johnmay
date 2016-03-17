@@ -357,7 +357,7 @@ class Estadistica(models.Model):
         pass
 
     def facturas(self):
-        return Documento.facturas.filter(fecha__year=self.year,
+        return Documento.objects.filter(fecha__year=self.year,
             fecha__month=self.month)
 
     def subtotal(self):
