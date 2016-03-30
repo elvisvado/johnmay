@@ -116,7 +116,7 @@ class Producto(Entidad):
 
 class Existencia(models.Model):
     producto = models.ForeignKey(Producto)
-    producto_codigo = models.Categoria(max_length=65, null=True)
+    producto_codigo = models.CharField(max_length=65, null=True)
     bodega = models.ForeignKey(Bodega)
     existencia_disponible = models.FloatField(default=0.0)
     existencia_real = models.FloatField(default=0.0)
