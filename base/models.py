@@ -116,6 +116,7 @@ class Producto(Entidad):
 
 class Existencia(models.Model):
     producto = models.ForeignKey(Producto)
+    producto_codigo = models.Categoria(max_length=65, null=True)
     bodega = models.ForeignKey(Bodega)
     existencia_disponible = models.FloatField(default=0.0)
     existencia_real = models.FloatField(default=0.0)
@@ -372,6 +373,8 @@ class Estadistica(models.Model):
             obj['facturas'] = self.facturas().filter(user=u.user)
             obj['subtotal'] = obj['facturas'].aggregate(
                 Sum('subtotal'))['subtotal__sum']
+            obj['descuento'] = obj['facturas'].aggregate(
+                Sum('descuento'))['descuento__sum']
             data.append(obj)
         return data
 
