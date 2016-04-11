@@ -197,7 +197,7 @@ class ManagerFactura(models.Manager):
 class Documento(models.Model):
 
     user = models.ForeignKey(User)
-    numero = models.PositiveIntegerField(null=True, blank=True)
+    numero = models.CharField(max_length=65, null=True, blank=True)
     tipopago = models.ForeignKey(TipoPago, null=True, blank=True)
     tipodoc = models.ForeignKey(TipoDoc, null=True)
     sucursal = models.ForeignKey(Sucursal)
