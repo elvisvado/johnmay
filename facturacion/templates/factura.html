@@ -57,6 +57,8 @@
                 var bodega = document.getElementById('modal_bodega').value;
                 var existencia = document.getElementById('modal_existencia').value;
                 var cantidad = document.getElementById('modal_cantidad').value;
+                var precio = documento.getElementById(modal_precio).value;
+                var descuento = documento.getElementById(modal_descuento);
                 if (bodega == "None"){
                     $('#msg').empty().append('<span class="alert-danger">Por favor seleccione una bodega...</span>');
                 } else if (cantidad > existencia) {
@@ -194,11 +196,20 @@
                                 <h4 class="modal-title">Exitencias en Bodega</h4>
                                 <!-- Agregando la Fila de los datos del Producto-->
                                 <div class="row">
-                                    <div class='col-md-12'>
-                                        <div id="detalle">
-                                            <div class="col-md-4">
-
-                                            </div>
+                                    <div class='col-md-6'>
+                                        <div class="form-group">
+                                            <label label_for="descuento">Descuento</label>
+                                            <input type="input" class="form-control" readonly="" id="modal_descuento" value=0></input>
+                                            <label label_for="precio">Precio</label>
+                                            <input type="input" class="form-control" readonly="" id="modal_precio" value=0></input>
+                                        </div>
+                                    </div>
+                                    <div class='col-md-6'>
+                                    <div class="form-group">
+                                            <label label_for="descuento_1"></label>
+                                            <input type="input" class="form-control" id="modal_descuento_1" value=0></input>
+                                            <label label_for="precio_1"></label>
+                                            <input type="input" class="form-control" id="modal_precio_1" value=0></input>
                                         </div>
                                     </div>
                                 </div>
