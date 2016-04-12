@@ -18,7 +18,6 @@
             }
 
             body {
-                background: url("{% static "moneycash/imagenes/WEB.jpg" %}") no-repeat center center fixed;
                 background-size: cover;
                 -moz-background-size: cover;
                 -webkit-background-size: cover;
@@ -34,15 +33,20 @@
             function quitar(){
                 $("#productos tr:last").remove();
                 calcular();
+
+            }
+            function totalFilas(){
+                return $('.fila').length;
             }
             function add_detail_product() {
                 $("#myModal").modal('hide');
-                var row = '<tr row=1>';
+
+                var row = '<tr class="fila" number="' + totalFilas() + '">';
                 row += '<td><input type="input" id="id_producto_codigo" class="form-control" value="' + $('#modal_codigo').val() + '" readonly name="producto_codigo"></td>';
                 row += '<td><input type="input" id="id_producto_nombre" class="form-control" value="' + $('#modal_descripcion').val() + '" readonly name="producto_nombre"></td>';
-                row += '<td><input type="input" id="id_producto_cantidad" class="form-control" value=' + $('#modal_cantidad').val() + ' onchange="calcular()" name="producto_cantidad"></td>';
-                row += '<td><input type="input" id="id_producto_precio" class="form-control" value="' + $('#modal_precio').val() + '" onchange="calcular()" name="producto_precio"></td >';
-                row += '<td><input type="input" id="id_producto_descuento" class="form-control" value=0 onchange="calcular()" name="producto_descuento"></td>';
+                row += '<td><input type="input" id="id_producto_cantidad" class="form-control" value=' + $('#modal_cantidad').val() + ' onchange="calcular()" readonly name="producto_cantidad"></td>';
+                row += '<td><input type="input" id="id_producto_precio" class="form-control" value="' + $('#modal_precio_1').val() + '" onchange="calcular()" readonly name="producto_precio"></td >';
+                row += '<td><input type="input" id="id_producto_descuento" class="form-control" value="' + $('#modal_descuento_1').val() + '" onchange="calcular()" readonly name="producto_descuento"></td>';
                 row += '<td><input type="input" id="id_total" class="form-control" value="' + $('#modal_precio').val() + '" onchange="calcular()" readonly name="producto_total"></td>'
                 row += '<td>';
                 row += '<input type="hidden" id="producto_id" value=' + $('#modal_id').val() + ' name="producto"></input>';
@@ -52,10 +56,12 @@
                 $('#productos tbody').append(row);
                 calcular();
             }
+
             function validar_modal(){
                 var bodega = document.getElementById('modal_bodega').value;
                 var existencia = document.getElementById('modal_existencia').value;
                 var cantidad = document.getElementById('modal_cantidad').value;
+
                 if (bodega == "None"){
                     $('#msg').empty().append('<span class="alert-danger">Por favor seleccione una bodega...</span>');
                 } else if (cantidad > existencia) {
@@ -69,9 +75,9 @@
     <body>
         <div class="container-fluid well">
             <div id="mensajes">
-            {% for m in mensajes %}
-                <span class='alert-{{ m.1 }}'>{{ m.0 }}</span>
-            {% endfor %}
+                {% for m in mensajes %}
+                    <span class='alert-{{ m.1 }}'>{{ m.0 }}</span>
+                {% endfor %}
             </div>
             <form method="POST" action=".">
                 {% csrf_token %}
@@ -181,7 +187,7 @@
                 </div>
                 <div class="row">
                     <button type="submit" class="btn btn-success">Grabar</button>
-                    <button type="button" class="btn btn-danger" value="Borrar" onclick="quitar()">Borrar    </button>
+                    <button type="button" class="btn btn-danger" value="Borrar" onclick="quitar()">Borrar</button>
                 </div>
                 <!-- Modal  -->
                 <div class="modal fade" id="myModal" role="dialog">
@@ -191,6 +197,26 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h4 class="modal-title">Exitencias en Bodega</h4>
+                                <!-- Agregando la Fila de los datos del Producto-->
+                                <div class="row">
+                                    <div class='col-md-6'>
+                                        <div class="form-group">
+                                            <label label_for="descuento">Descuento</label>
+                                            <input type="input" class="form-control" readonly="" id="modal_descuento_pop" value=0></input>
+                                            <label label_for="precio">Precio</label>
+                                            <input type="input" class="form-control" readonly="" id="modal_precio_pop" value=0></input>
+                                        </div>
+                                    </div>
+                                    <div class='col-md-6'>
+                                    <div class="form-group">
+                                            <label label_for="descuento_1">Aplicar Descuento</label>
+                                            <input type="input" class="form-control" id="modal_descuento_1" value=0></input>
+                                            <label label_for="precio_1">Aplicar Precio</label>
+                                            <input type="input" class="form-control" id="modal_precio_1" value=0></input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End Fila de datos-->
                             </div>
                             <div class="modal-body">
                                 <div class="row">
@@ -218,6 +244,7 @@
                 </div>
             </div>
         </div>
+        <div>Si los campos precio y descuento son distintos al de sistema la factura no caera a caja si a un apartado de autorizacion</div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" onclick="validar_modal();">Ok</button>
@@ -299,6 +326,9 @@
                 document.getElementById("modal_codigo").value = ui.item.obj.code;
                 document.getElementById("modal_descripcion").value = ui.item.obj.name;
                 document.getElementById("modal_precio").value = ui.item.obj.precio;
+                document.getElementById("modal_precio_pop").value = ui.item.obj.precio;
+                document.getElementById("modal_precio_1").value = ui.item.obj.precio;
+
                 list_exists_products({
                     code: codigo,
                     csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val()
@@ -335,9 +365,7 @@
                 type: 'POST',
                 data: code,
                 beforeSend: function() {
-
-                    $("#msg").empty().append("<span class='alert'>Cargando...</span>");
-
+                    <!--$("#msg").empty().append("<span class='alert'>Cargando...</span>");-->
                 },
                 success: function(data) {
                     $("#exitencia>tbody").empty()
@@ -358,6 +386,18 @@
 
 
     });
+
+    $('#productos tbody').on('dblclick', '.fila', function(e){
+        e.stopPropagation();
+        document.getElementById("modal_cantidad").value = $(this).find('#id_producto_cantidad').val();
+        document.getElementById("modal_descuento_1").value = $(this).find('#id_producto_descuento').val();
+        document.getElementById("modal_precio_1").value = $(this).find('#id_producto_precio').val();
+
+        $('#msg').empty().append('<span class="alert-danger"></span>');
+        console.log($("#myModal").modal)
+        $("#myModal").modal('show');
+    });
+
 
 </script>
 </html>

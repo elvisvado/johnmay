@@ -14,13 +14,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='documento',
             name='documento_numero',
-            field=models.IntegerField(null=True, blank=True),
+            field=models.CharField(max_length=75, null=True, blank=True),
             preserve_default=True,
         ),
         migrations.AlterField(
             model_name='inventario',
             name='documento_numero',
-            field=models.IntegerField(null=True, blank=True),
+            field=models.CharField(max_length=75, null=True, blank=True),
             preserve_default=True,
         ),
     ]

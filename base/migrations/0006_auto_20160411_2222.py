@@ -11,18 +11,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='existencia',
-            name='bodega_codigo',
-            field=models.CharField(max_length=65, null=True),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='existencia',
-            name='producto_codigo',
-            field=models.CharField(max_length=65, null=True),
-            preserve_default=True,
-        ),
         migrations.AlterField(
             model_name='documento',
             name='numero',
