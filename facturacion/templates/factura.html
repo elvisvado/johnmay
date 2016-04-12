@@ -69,9 +69,9 @@
     <body>
         <div class="container-fluid well">
             <div id="mensajes">
-            {% for m in mensajes %}
-                <span class='alert-{{ m.1 }}'>{{ m.0 }}</span>
-            {% endfor %}
+                {% for m in mensajes %}
+                    <span class='alert-{{ m.1 }}'>{{ m.0 }}</span>
+                {% endfor %}
             </div>
             <form method="POST" action=".">
                 {% csrf_token %}
@@ -336,7 +336,9 @@
                 data: code,
                 beforeSend: function() {
 
+<!--
                     $("#msg").empty().append("<span class='alert'>Cargando...</span>");
+-->
 
                 },
                 success: function(data) {
