@@ -39,36 +39,55 @@
                 return $('.fila').length;
             }
             function add_detail_product() {
-                $("#myModal").modal('hide');
-
-                var row = '<tr class="fila" number="' + totalFilas() + '">';
-                row += '<td><input type="input" id="id_producto_codigo" class="form-control" value="' + $('#modal_codigo').val() + '" readonly name="producto_codigo"></td>';
-                row += '<td><input type="input" id="id_producto_nombre" class="form-control" value="' + $('#modal_descripcion').val() + '" readonly name="producto_nombre"></td>';
-                row += '<td><input type="input" id="id_producto_cantidad" class="form-control" value=' + $('#modal_cantidad').val() + ' onchange="calcular()" readonly name="producto_cantidad"></td>';
-                row += '<td><input type="input" id="id_producto_precio" class="form-control" value="' + $('#modal_precio_1').val() + '" onchange="calcular()" readonly name="producto_precio"></td >';
-                row += '<td><input type="input" id="id_producto_descuento" class="form-control" value="' + $('#modal_descuento_1').val() + '" onchange="calcular()" readonly name="producto_descuento"></td>';
-                row += '<td><input type="input" id="id_total" class="form-control" value="' + $('#modal_precio').val() + '" onchange="calcular()" readonly name="producto_total"></td>'
-                row += '<td>';
-                row += '<input type="hidden" id="producto_id" value=' + $('#modal_id').val() + ' name="producto"></input>';
-                row += '<input type="hidden" id="bodega_id" value=' + $('#modal_bodega').val() + ' name="bodega"></input>';
-                row += '</td>';
-                row += '</tr>';
-                $('#productos tbody').append(row);
-                calcular();
+                var prod = $('#modal_id').val();
+                var bod = $('#modal_bodega').val();
+                var prods = $('#producto_id[value='+prod+']');
+                if (prods.length > 0) {
+                        $.each(prods, function(i, obj){
+                                alert("este producto ya esta en la factura");
+                            })
+                    } else {
+                        var row = '<tr class="fila" number="' + totalFilas() + '">';
+                        row += '<td><input type="input" id="id_producto_codigo" class="form-control" value="' + $('#modal_codigo').val() + '" readonly name="producto_codigo"></td>';
+                        row += '<td><input type="input" id="id_producto_nombre" class="form-control" value="' + $('#modal_descripcion').val() + '" readonly name="producto_nombre"></td>';
+                        row += '<td><input type="input" id="id_producto_cantidad" class="form-control" value=' + $('#modal_cantidad').val() + ' onchange="calcular()" readonly name="producto_cantidad"></td>';
+                        row += '<td><input type="input" id="id_producto_precio" class="form-control" value="' + $('#modal_precio_1').val() + '" onchange="calcular()" readonly name="producto_precio"></td >';
+                        row += '<td><input type="input" id="id_producto_descuento" class="form-control" value="' + $('#modal_descuento_1').val() + '" onchange="calcular()" readonly name="producto_descuento"></td>';
+                        row += '<td><input type="input" id="id_total" class="form-control" value="' + $('#modal_precio').val() + '" onchange="calcular()" readonly name="producto_total"></td>'
+                        row += '<td>';
+                        row += '<input type="hidden" id="producto_id" value=' + $('#modal_id').val() + ' name="producto"></input>';
+                        row += '<input type="hidden" id="bodega_id" value=' + $('#modal_bodega').val() + ' name="bodega"></input>';
+                        row += '</td>';
+                        row += '</tr>';
+                        $('#productos tbody').append(row);
+                    }
             }
 
             function validar_modal(){
-                var bodega = document.getElementById('modal_bodega').value;
-                var existencia = document.getElementById('modal_existencia').value;
-                var cantidad = document.getElementById('modal_cantidad').value;
-
+                var bodega = $('#modal_bodega').val();
+                var existencia = $('#modal_existencia').val();
+                var cantidad = $('#modal_cantidad').val();
+                var precio = $('#modal_precio_1').val();
+                var descuento = $('#modal_descuento_1').val();
                 if (bodega == "None"){
                     $('#msg').empty().append('<span class="alert-danger">Por favor seleccione una bodega...</span>');
                 } else if (cantidad > existencia) {
                     $('#msg').empty().append('<span class="alert-danger">La cantidad no puede ser mayor que la existencia</span>');
                 } else {
-                    add_detail_product();
+                    $("#myModal").modal('hide');
+                    if ($("#myModal").data('number')!= undefined){
+                        var num = $("#myModal").data('number');
+                        var fil = $("#productos tbody").find("tr[number=" + num +"]");
+                        fil.find('#id_producto_cantidad').val(cantidad);
+                        fil.find('#id_producto_precio').val(precio);
+                        fil.find('#id_producto_descuento').val(descuento);
+                        $("#myModal").data('number', undefined);
+                        } else {
+                           add_detail_product();
+                        }
+                        calcular();
                 }
+
             }
         </script>
     </head>
@@ -378,6 +397,7 @@
                     }
                     document.getElementById("modal_bodega").value = "None";
                     document.getElementById("modal_cantidad").value = "1";
+
                     $("#myModal").modal('show');
                 }
             });
@@ -389,13 +409,16 @@
 
     $('#productos tbody').on('dblclick', '.fila', function(e){
         e.stopPropagation();
-        document.getElementById("modal_cantidad").value = $(this).find('#id_producto_cantidad').val();
-        document.getElementById("modal_descuento_1").value = $(this).find('#id_producto_descuento').val();
-        document.getElementById("modal_precio_1").value = $(this).find('#id_producto_precio').val();
-
+        $("#modal_cantidad").val($(this).find('#id_producto_cantidad').val());
+        $("#modal_descuento_1").val($(this).find('#id_producto_descuento').val());
+        $("#modal_precio_1").val($(this).find('#id_producto_precio').val());
         $('#msg').empty().append('<span class="alert-danger"></span>');
-        console.log($("#myModal").modal)
-        $("#myModal").modal('show');
+        $("#myModal")
+            .data('number', $(this).attr('number'))
+            .modal('show');
+        var num = $("#myModal").data('number');
+        var fil = $("#productos tbody").find("tr[number=" + num +"]");
+        console.log(fil);
     });
 
 
