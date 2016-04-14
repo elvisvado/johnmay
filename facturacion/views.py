@@ -139,6 +139,7 @@ def instance_to_json(instance, request):
     return HttpResponse(data, content_type='application/json')
 
 
+@csrf_exempt
 def autocomplete_cliente(request):
     return autocomplete_entidad(Cliente(), request)
 
