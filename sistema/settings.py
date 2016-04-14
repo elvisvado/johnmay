@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'facturacion',
     'home',
     'grappelli_dynamic_navbar',
     'daterange_filter',
@@ -44,7 +45,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'base',
-    'facturacion',
     'importacion',
     'inventario',
 )

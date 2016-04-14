@@ -11,6 +11,7 @@ from django.forms.models import model_to_dict
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from django.views.decorators.csrf import csrf_exempt
 
 
 def factura():
@@ -154,6 +155,7 @@ def datos_producto(request):
     return instance_to_json(Producto(), request)
 
 
+@csrf_exempt
 def existencias_producto(request):
     p = None
     existencias = []
