@@ -156,11 +156,10 @@ $(document).on('ready', function(){
         $(this).select();
     });
 
-    $('#id_cliente_nombre,#id_cliente_identificacion').each(function(){
-        $(this).autocomplete({
-            minLength: 2,
-            source: "/facturacion/buscar_cliente",
-            select: function( event, ui ) {
+    $('#id_cliente_nombre,#id_cliente_identificacion').autocomplete({
+        minLength: 2,
+        source: "/facturacion/buscar_cliente",
+        select: function( event, ui ) {
                 $('#id_cliente_code').val(ui.item.obj.code);
                 $('#id_cliente_id').val(ui.item.obj.id);
                 $('#id_cliente_nombre').val(ui.item.obj.name);
@@ -168,8 +167,7 @@ $(document).on('ready', function(){
                 $('#id_cliente_telefono').val(ui.item.obj.telefono);
                 $('#id_cliente_email').val(ui.item.obj.email);
                 $('#id_cliente_direccion').val(ui.item.obj.direccion);
-            }
-        });
+        }
     });
 
     $("#exitencia").on("click", "td", function() {
@@ -185,10 +183,7 @@ $(document).on('ready', function(){
         minLength: 2,
         source: "/facturacion/buscar_producto",
         select: function( event, ui ) {
-/*
             var codigo = ui.item.obj.code;
-
-            $('#myModal').data('precio', ui.item.obj.precio)
 
             $('#modal_id').val(ui.item.obj.id);
             $('#modal_codigo').val(ui.item.obj.code);
@@ -203,7 +198,6 @@ $(document).on('ready', function(){
             });
 
             $("#myModal").modal('show');
-*/
         }
     });
 
