@@ -116,8 +116,8 @@ def autocomplete_entidad(instance, request):
             )
         for obj in qs:
             obj_json = {}
-            obj_json['label'] = str(obj)
-            obj_json['value'] = str(obj.name)
+            obj_json['label'] = obj.name
+            obj_json['value'] = obj.name
             obj_json['obj'] = model_to_dict(obj)
             result.append(obj_json)
 
