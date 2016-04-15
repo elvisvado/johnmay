@@ -109,18 +109,26 @@ def autocomplete_entidad(instance, request):
     if request.is_ajax:
         model = type(instance)
         result = []
-
-        qs = model.objects.filter(
-            Q(code__istartswith=request.GET.get('term', '')) |
-            Q(name__icontains=request.GET.get('term', ''))
-            )
-        for obj in qs:
+        term = request.GET.get('term', None)
+        code = request.GET.get('code', None)
+        if term:
+            qs = model.objects.filter(
+                Q(code__istartswith=term) |
+                Q(name__icontains=term)
+                )
+            for obj in qs:
+                obj_json = {}
+                obj_json['label'] = obj.name
+                obj_json['value'] = obj.name
+                obj_json['obj'] = model_to_dict(obj)
+                result.append(obj_json)
+        if code:
+            obj = model.objects.get(code=code)
             obj_json = {}
             obj_json['label'] = obj.name
             obj_json['value'] = obj.name
             obj_json['obj'] = model_to_dict(obj)
             result.append(obj_json)
-
         data = json.dumps(result)
     else:
         data = 'fail'

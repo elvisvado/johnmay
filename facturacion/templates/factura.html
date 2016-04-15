@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/static/facturacion/css/style.css">
         <style>
             .btn-remove {
                 text-align: center;
@@ -144,13 +145,16 @@
                 </div>
                 <!-- Modal  -->
                 <div class="modal fade" id="myModal" role="dialog">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog modal-md">
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h4 class="modal-title">Exitencias en Bodega</h4>
-                                <!-- Agregando la Fila de los datos del Producto-->
+                            </div>
+                            <div class="modal-body">
+								
+								 <!-- Agregando la Fila de los datos del Producto-->
                                 <div class="row">
                                     <div class='col-md-6'>
                                         <div class="form-group">
@@ -170,8 +174,6 @@
                                     </div>
                                 </div>
                                 <!--End Fila de datos-->
-                            </div>
-                            <div class="modal-body">
                                 <div class="row">
                                     <div class='col-md-12'>
                                         <div id="msg"></div>
@@ -186,25 +188,21 @@
                                             </tbody>
                                         </table>
                                         <div class="form-group">
-                                            <label label_for="cantidad">Cantidad</label>
+                                            <label for="cantidad">Cantidad</label>
                                             <input type="input" class="form-control" id="modal_cantidad" value=1></input>
-                                        <input type="hidden" id="modal_codigo" class="form-control" value="None"></input>
-                                    <input type="hidden" id="modal_descripcion" class="form-control" value="None"></input>
-                                <input type="hidden" id="modal_precio" class="form-control" value="None"></input>
-                            <input type="hidden" id="modal_bodega" class="form-control" value="None"></input>
-                            <input type="hidden" id="modal_existencia" class="form-control" value="None"></input>
-                        <input type="hidden" id="modal_id" class="form-control" value="off"></input>
-                </div>
-            </div>
-        </div>
-        <div>Si los campos precio y descuento son distintos al de sistema la factura no caera a caja si a un apartado de autorizacion</div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" onclick="validar_modal();">Ok</button>
-    </div>
-</div>
-</div>
-</div>
+                                            <input type="hidden" class="form-control" id="modal_bodega" value=undefined></input>
+                                        </div>
+                                    </div>
+								</div>
+							</div>
+							<p>Si los campos precio y descuento son distintos al de sistema la factura no caera a caja si a un apartado de autorizacion</p>							
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" id="modal_ok">Ok</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
 <!-- End Modal -->
 </form>
 </div>
