@@ -118,19 +118,15 @@ var update_fila = function(){
     load_modal($(this));
 }
 
-
- $("#exitencia").on("click", "td", function() {
-            $("#exitencia>tbody>tr").removeClass("selected");
-            $( this ).parent().addClass("selected");
-            var bodega = $(this).parent().attr("row");
-            var existencia = $(this).parent().find('#existencia_existencia').html();
-            document.getElementById("modal_bodega").value = bodega;
-            document.getElementById("modal_existencia").value = existencia;
-        });
+var selected_fila = function(){
+  $("#exitencia>tbody>tr").removeClass("selected");
+  $(this).parent().addClass("selected");
+}
 
 $(document).on('ready', function(){
     $('#id_cliente_nombre').on('keyup', complete_cliente);
     $('#id_buscador_productos').on('keyup', complete_producto);
     $('#productos tbody').on('dblclick', '.detalle', update_fila);
     $('#modal_ok').on('click', save_fila);
+    $("#exitencia").on("click", "td", selected_fila);
 });
