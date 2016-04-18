@@ -138,12 +138,13 @@ function validar_modal(){
     var precio = $('#modal_precio_1').val();
     var descuento = $('#modal_descuento_1').val();
 
-    if (bodega == "None"){
+    if (bodega == undefined){
         $('#msg').empty().append('<span class="alert-danger">Por favor seleccione una bodega...</span>');
     } else if (cantidad > existencia) {
         $('#msg').empty().append('<span class="alert-danger">La cantidad no puede ser mayor que la existencia</span>');
     } else {
         $("#myModal").modal('hide');
+
     if ($("#myModal").data('number')!= undefined){
         var num = $("#myModal").data('number');
         var fil = $("#productos tbody").find("tr[number=" + num +"]");

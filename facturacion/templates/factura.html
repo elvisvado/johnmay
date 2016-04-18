@@ -129,9 +129,10 @@
                             <tr>
                                 <th>CODIGO</th>
                                 <th>DESCRIPCION</th>
+                                <th>BODEGA</th>
                                 <th>CANTIDAD</th>
-                                <th>PRECIO UNITARIO</th>
-                                <th>DESCUENTO UNITARIO</th>
+                                <th>PRECIO UNIT</th>
+                                <th>DESCUENTO UNIT</th>
                                 <th>TOTAL</th>
                             </tr>
                         </thead>
@@ -140,8 +141,7 @@
                     </table>
                 </div>
                 <div class="row">
-                    <button type="submit" class="btn btn-success">Grabar</button>
-                    <button type="button" class="btn btn-danger" value="Borrar" onclick="quitar()">Borrar</button>
+                    <button type="submit" class="btn btn-success" id="id_guardar_factura">Grabar</button>
                 </div>
                 <!-- Modal  -->
                 <div class="modal fade" id="myModal" role="dialog">
@@ -149,11 +149,11 @@
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <button type="button" class="close" id="id_close_modal" data-dismiss="modal">&times;</button>
                                 <h4 class="modal-title">Exitencias en Bodega</h4>
                             </div>
                             <div class="modal-body">
-								
+
 								 <!-- Agregando la Fila de los datos del Producto-->
                                 <div class="row">
                                     <div class='col-md-6'>
@@ -189,15 +189,16 @@
                                         </table>
                                         <div class="form-group">
                                             <label for="cantidad">Cantidad</label>
-                                            <input type="input" class="form-control" id="modal_cantidad" value=1></input>
-                                            <input type="hidden" class="form-control" id="modal_bodega" value=undefined></input>
+                                            <input type="input" class="form-control" id="modal_cantidad"></input>
+                                            <input type="hidden" class="form-control" id="modal_bodega" value="None"></input>
                                         </div>
                                     </div>
 								</div>
 							</div>
-							<p>Si los campos precio y descuento son distintos al de sistema la factura no caera a caja si a un apartado de autorizacion</p>							
+							<p>Si los campos precio y descuento son distintos al de sistema la factura no caera a caja si a un apartado de autorizacion</p>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-default" id="modal_ok">Ok</button>
+								<button type="button" class="btn btn-danger" id="modal_delete">Borrar Producto</button>
+                <button type="button" class="btn btn-success" id="modal_ok">Agregar Producto</button>
 							</div>
 						</div>
 					</div>

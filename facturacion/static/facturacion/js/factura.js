@@ -15,6 +15,8 @@ funciones
     buscar existencias en bodega
 */
 
+var select_fila;
+
 var complete_cliente = function(){
     var _self = $(this);
     $(_self).autocomplete({
@@ -34,9 +36,11 @@ var complete_cliente = function(){
 
 var create_row = function(obj){
     var row = $('<tr class="detalle"></tr>').data('producto', JSON.stringify(obj));
+    row.data('nuevo', true);
     row.attr('id', obj.id);
     row.append($('<td><input type="input" id="id_producto_codigo" class="form-control" readonly name="producto_codigo" value="' + obj.code + '"></td>'));
     row.append($('<td><input type="input" id="id_producto_nombre" class="form-control" readonly name="producto_nombre" value="'+obj.name+'"></td>'));
+    row.append($('<td><input type="input" id="id_producto_bodega" class="form-control" readonly name="producto_bodega" value="0"></td>'));
     row.append($('<td><input type="input" id="id_producto_cantidad" class="form-control" readonly name="producto_cantidad" value="1"></td>'));
     row.append($('<td><input type="input" id="id_producto_precio" class="form-control" readonly name="producto_precio" value="'+obj.precio+'"></td>'));
     row.append($('<td><input type="input" id="id_producto_descuento" class="form-control" readonly name="producto_descuento" value="0"></td>'));
@@ -49,38 +53,37 @@ var create_row = function(obj){
     return row;
 }
 
-var load_existencias = function (obj){
-    $.ajax("/facturacion/existencias_producto/", {
-        type: 'POST',
-        data: {'code': obj.code},
-        success: function(data){
-            var exist = $("#exitencia>tbody");
-            exist.empty();
-            $.each(data, function(i, o){
-                var row = $('<tr></tr>').data('pk', o.bodega_id);
-                row.append($('<td></td>').html(o.bodega_nombre));
-                row.append($('<td></td>').html(o.existencia));
-                exist.append(row);
-            });
-            $('#modal_bodega').val(undefined);
-            $('#modal_cantidad').val(1);
-        }
-    });
+var complete_producto = function () {
+    var _self = $(this);
+    if($.trim($(_self).val()) != '') {
+        $(_self).autocomplete({
+            minLength: 2,
+            source: "/facturacion/buscar_producto",
+            select: function(i, o) {
+                var row = create_row(o.item.obj);
+                var obj = JSON.parse($(row).data('producto'));
+                load_modal(row);
+            }
+        });
+    }
 }
 
 var load_modal = function(row){
     var obj = JSON.parse($(row).data('producto'));
     $('#myModal').data('producto', $(row).data('producto'));
+    $('#myModal').data('nuevo', $(row).data('nuevo'));
     $('#modal_codigo').val(obj.code);
     $('#modal_descripcion').val(obj.name);
     $('#modal_precio_pop').val(obj.precio);
     $('#modal_precio_1').val(row.find('#id_producto_precio').val());
+    $('#modal_cantidad').val(row.find('#id_producto_cantidad').val());
+
     load_existencias(obj);
     $('#myModal').modal('show');
     try {
-        if(parseFloat($(fila).find('#producto_precio').val()) == 0){
+        if(parseFloat($(row).find('#producto_precio').val()) == 0){
             $('#modal_precio_1').val(
-                parseFloat($(fila).find('#producto_precio').val()));
+                parseFloat($(row).find('#producto_precio').val()));
         }
     }
     catch (e) {
@@ -90,28 +93,36 @@ var load_modal = function(row){
     return row
 }
 
-var complete_producto = function () {
-    var _self = $(this);
-    if($.trim($(_self).val()) != '') {
-        $(_self).autocomplete({
-            minLength: 2,
-            source: "/facturacion/buscar_producto",
-            select: function(i, o) {
-                var row = create_row(o.item.obj);
-                load_modal(row);
-            }
-        });
-    }
+var load_existencias = function (obj){
+    $.ajax("/facturacion/existencias_producto/", {
+        type: 'POST',
+        data: {'code': obj.code},
+        success: function(data){
+            var exist = $("#exitencia>tbody");
+            exist.empty();
+            $.each(data, function(i, o){
+                var row = $('<tr></tr>').data('pk', o.bodega_id);
+                row.append($('<td id="bodega_bodega"></td>').html(o.bodega_nombre));
+                row.append($('<td id="bodega_existencia"></td>').html(o.existencia));
+                exist.append(row);
+            });
+            $('#modal_bodega').val(undefined);
+            $('#modal_cantidad').val();
+        }
+    });
 }
 
 var save_fila = function (){
     var modal = $('#myModal');
     var obj = JSON.parse(modal.data('producto'));
     var row = $('#'+obj.id);
+    row.find('#id_producto_bodega').val($('#exitencia tbody').find('.selected #bodega_bodega').html());
     row.find('#id_producto_precio').val($('#modal_precio_1').val());
     row.find('#id_producto_cantidad').val($('#modal_cantidad').val());
     row.find('#id_producto_descuento').val($('#modal_descuento_1').val());
+    row.data('nuevo', false);
     modal.modal('hide');
+    calcular_factura();
 }
 
 var update_fila = function(){
@@ -120,13 +131,110 @@ var update_fila = function(){
 
 var selected_fila = function(){
   $("#exitencia>tbody>tr").removeClass("selected");
-  $(this).parent().addClass("selected");
+  $(this).addClass("selected");
+  $('#modal_bodega').val($(this).data('pk'));
+}
+
+var validar_modal = function(){
+  var bodega = $('#modal_bodega').val();
+  var existencia = parseFloat($('#exitencia tbody').find('.selected #bodega_existencia').html());
+  var cantidad = parseFloat($('#modal_cantidad').val());
+  var precio = parseFloat($('#modal_precio_1').val());
+  var descuento = parseFloat($('#modal_descuento_1').val());
+
+  if (bodega == ""){
+    $('#msg').empty().append('<span class="alert-danger">Por favor seleccione una bodega...</span>');
+  } else if (cantidad > existencia) {
+    $('#msg').empty().append('<span class="alert-danger">La cantidad no puede ser mayor que la existencia</span>');
+  } else {
+    save_fila();
+  }
+}
+
+var calcular_factura = function(){
+  var Subtotal = 0;
+  var Descuento = 0;
+  var Iva = 0;
+  var Retencion = 0;
+  var Total = 0;
+
+  $('#productos>tbody tr').each(function(){
+      $this = $(this);
+      var cantidad = $(this).find("#id_producto_cantidad").val();
+      var precio = $(this).find("#id_producto_precio").val();
+      var descuento = parseFloat($(this).find("#id_producto_descuento").val());
+
+      $(this).find("#id_total").val((cantidad*precio)-(cantidad*descuento));
+
+      Subtotal += cantidad * precio;
+      Descuento += (cantidad*descuento);
+  });
+
+  if($('#id_excento').is(':checked')) {
+      Iva = 0;
+  } else {
+      Iva = (Subtotal - Descuento) * 0.15;
+  }
+  if($('#id_ir').is(':checked')) {
+    if((Subtotal - Descuento) > 1000){
+      Retencion += (Subtotal - Descuento) * 0.02;
+    }
+  }
+  if($('#id_al').is(':checked')) {
+    if((Subtotal - Descuento) > 1000){
+      Retencion += (Subtotal - Descuento) * 0.01;
+    }
+  }
+
+  Total = (Subtotal - Descuento) + Iva - Retencion;
+  $("#id_factura_subtotal").val(Subtotal.toFixed(2));
+  $("#id_factura_descuento").val(Descuento.toFixed(2));
+  $("#id_factura_iva").val(Iva.toFixed(2));
+  $("#id_factura_retencion").val(Retencion.toFixed(2));
+  $("#id_factura_total").val(Total.toFixed(2));
+  }
+
+var quitar_fila = function(){
+  var modal = $('#myModal');
+  var obj = JSON.parse(modal.data('producto'));
+  var row = $('#'+obj.id);
+  if(row.data('nuevo')){
+    row.remove();
+  }
+    calcular_factura();
+  }
+  var eliminar_producto = function() {
+    var modal = $('#myModal');
+    var obj = JSON.parse(modal.data('producto'));
+    var row = $('#'+obj.id);
+    modal.modal('hide');
+    row.remove();
+    calcular_factura();
+  }
+var get_descuento = function(){
+  event.preventDefault();
+  if($(this).val().match(/(?:%)$/)){
+    var percent = parseFloat($(this).val().replace('%','')) / 100;
+    $(this).val((parseFloat($('#modal_precio_1').val()) * percent).toFixed(2));
+  }
+}
+
+var guardar_documento = function(){
+  console.log(hola);
 }
 
 $(document).on('ready', function(){
     $('#id_cliente_nombre').on('keyup', complete_cliente);
     $('#id_buscador_productos').on('keyup', complete_producto);
     $('#productos tbody').on('dblclick', '.detalle', update_fila);
-    $('#modal_ok').on('click', save_fila);
-    $("#exitencia").on("click", "td", selected_fila);
+    $('#modal_ok').on('click', validar_modal);
+    $('#exitencia').on('click', 'tr', selected_fila);
+    $('#id_ir').on('change', calcular_factura);
+    $('#id_al').on('change', calcular_factura);
+    $('#id_excento').on('change', calcular_factura);
+    $('#modal_cantidad').on('focus', $(this).select());
+    $('#id_guardar_factura').on('click', guardar_documento);
+    $('#id_close_modal').on('click', quitar_fila);
+    $('#modal_delete').on('click', eliminar_producto);
+    $('#modal_descuento_1').on('change', get_descuento);
 });
