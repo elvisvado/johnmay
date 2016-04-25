@@ -24,18 +24,19 @@ def tipopagos():
 
 def grabar_factura(request):
     c = base_cliente()
-    c.code = request.POST.get("cliente_code", "")
-    c.name = request.POST.get("cliente_nombre", "")
-    c.identificacion = request.POST.get("cliente_identificacion", "")
-    c.email = request.POST.get("cliente_email", "")
-    c.telefono = request.POST.get("cliente_telefono", "")
-    c.direccion = request.POST.get("cliente_direccion", "")
+    c.cliente_codigo = request.POST.get("cliente_code", "")
+    c.cliente_nombre = request.POST.get("cliente_nombre", "")
+    c.cliente_identificacion = request.POST.get("cliente_identificacion", "")
+    c.cliente_email = request.POST.get("cliente_email", "")
+    c.cliente_telefono = request.POST.get("cliente_telefono", "")
+    c.cliente_direccion = request.POST.get("cliente_direccion", "")
 
     f = Factura()
     f.fecha = datetime.now()
+    f.user = request.user
     f.sucursal = request.user.sucursal
     f.tipodoc = factura()
-    f.user = request.user
+
     f.vendedor = request.user
     f.tipopago = TipoPago.objects.get(
         id=request.POST.get("factura_tipopago", ""))
@@ -59,20 +60,28 @@ def grabar_detalle(request, factura):
     data = []
     for i in range(0, t):
         dd = Detalle()
-        dd.factura = factura
-        dd.producto_codigo = request.POST.getlist('producto_codigo', '')[i]
-        dd.producto_nombre = request.POST.getlist('producto_nombre', '')[i]
-        dd.cantidad = request.POST.getlist('producto_cantidad', '')[i]
-        dd.precio_unitario = request.POST.getlist('producto_precio', '')[i]
-        dd.descuento_unitario = request.POST.getlist(
-            'producto_descuento', '')[i]
-        dd.cantidad = request.POST.getlist('producto_cantidad', '')[i]
-        dd.cantidad = request.POST.getlist('producto_cantidad', '')[i]
-        dd.bodega = Bodega.objects.get(id=int(request.POST.getlist(
-            'bodega', '')[i]))
-        dd.producto = Producto.objects.get(code=request.POST.getlist(
-            'producto_codigo', '')[i])
+        p = Producto.objects.get(code=request.POST.getlist('producto_codigo', '')[i])
+        b = Bodega.objects.get(id=int(request.POST.getlist('bodega', '')[i]))
+        e = p.existencias().filter(bodega=b)[0]
+        dd.documento = factura
+        dd.producto = p
+        dd.producto_cantidad = float(request.POST.getlist('producto_cantidad', '')[i])
+        dd.producto_precio_unitario = float(request.POST.getlist('producto_precio', '')[i])
+        dd.producto_descuento_unitario = float(request.POST.getlist('producto_descuento', '')[i])
+        dd.bodega = b
+        dd.producto_costo_unitario = p.costo
+        dd.producto_existencia = float(e.existencia_disponible)
+        dd.producto_saldo = dd.producto_existencia - dd.producto_cantidad
+        e.existencia_disponible = dd.producto_saldo
+        dd.producto_costo_promedio = p.costo
+        dd.precio_total = dd.producto_cantidad * dd.producto_precio_unitario
+        dd.costo_total = dd.producto_cantidad * dd.producto_costo_unitario
+        dd.descuento_total = dd.producto_cantidad * dd.producto_descuento_unitario
+        dd.utilidad = (dd.precio_total - dd.descuento_total) - dd.costo_total
+        dd.factor = (dd.precio_total - dd.descuento_total) / dd.costo_total
+
         dd.save()
+        e.save()
         data.append(dd)
     return data
 
@@ -182,6 +191,3 @@ def existencias_producto(request):
                 existencias.append(obj_json)
     data = json.dumps(existencias)
     return HttpResponse(data, content_type='application/json')
-
-
-

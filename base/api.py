@@ -92,8 +92,7 @@ def get_cliente(obj):
         try:
             c = Cliente.objects.filter(name=obj.cliente_nombre)[0]
         except:
-            c, created = Cliente.objects.get_or_create(
-                name=obj.cliente_nombre)
+            c, created = Cliente.objects.get_or_create(name=obj.cliente_nombre)
     c.name = devolver_mayor(c.name, obj.cliente_nombre)
     c.identificacion = devolver_mayor(c.identificacion,
         obj.cliente_identificacion)
@@ -144,4 +143,3 @@ def get_detalle(obj):
     dd.producto_costo_unitario = obj.producto_costo
     dd.save()
     return dd
-

@@ -31,7 +31,7 @@ class Entidad(base_entidad):
 
     def save(self, *args, **kwargs):
         if self.code is None or self.code == '':
-            self.code = get_code(self)
+            self.code = (self)
         super(Entidad, self).save()
 
     class Meta:
@@ -195,7 +195,6 @@ class ManagerFactura(models.Manager):
 
 
 class Documento(models.Model):
-
     user = models.ForeignKey(User)
     numero = models.CharField(max_length=65, null=True, blank=True)
     tipopago = models.ForeignKey(TipoPago, null=True, blank=True)
@@ -378,5 +377,3 @@ class Estadistica(models.Model):
                 Sum('descuento'))['descuento__sum']
             data.append(obj)
         return data
-
-
