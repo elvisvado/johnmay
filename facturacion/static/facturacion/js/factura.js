@@ -46,7 +46,7 @@ var create_row = function(obj){
     oculta.append($('<input type="hidden" id="producto_id" name="producto"></input>'));
     oculta.append($('<input type="hidden" id="bodega_id" name="bodega"></input>'));
     row.append(oculta);
-    $('#productos tbody').append(row);
+    //$('#productos tbody').append(row);
     return row;
 }
 var complete_producto = function () {
@@ -58,10 +58,29 @@ var complete_producto = function () {
             select: function(i, o) {
                 var row = create_row(o.item.obj);
                 var obj = JSON.parse($(row).data('producto'));
-                load_modal(row);
+
+                if (vericar_duplicado(row) == false) {
+                  $('#productos tbody').append(row);
+                  load_modal(row);
+                }
             }
         });
     }
+}
+var vericar_duplicado = function(row){
+    var codigo = $(row).find('#id_producto_codigo').val();
+    var id = $(row).attr('id');
+    var result = false;
+
+    $("#productos tbody tr").each(function(){
+      if($(this).attr('id') == id && codigo == $(this).find('#id_producto_codigo').val()) {
+        result = true;
+        }
+        else {
+          result = false;
+          }
+    })
+    return result;
 }
 var load_modal = function(row){
     var obj = JSON.parse($(row).data('producto'));
@@ -72,6 +91,9 @@ var load_modal = function(row){
     $('#modal_precio_pop').val(obj.precio);
     $('#modal_precio_1').val(row.find('#id_producto_precio').val());
     $('#modal_cantidad').val(row.find('#id_producto_cantidad').val());
+    $('#modal_descuento_1').val(row.find('#id_producto_descuento').val());
+
+    $('#msg').empty().append('<span class="alert-danger"></span>');
 
     load_existencias(obj);
     $('#myModal').modal('show');
@@ -110,7 +132,6 @@ var save_fila = function (){
     var obj = JSON.parse(modal.data('producto'));
     var row = $('#'+obj.id);
     row.find('#bodega_id').val($('#exitencia>tbody tr').data('pk'));
-    console.log($('#exitencia>tbody tr').data('pk'));
     row.find('#id_producto_bodega').val($('#exitencia tbody').find('.selected #bodega_bodega').html());
     row.find('#id_producto_precio').val($('#modal_precio_1').val());
     row.find('#id_producto_cantidad').val($('#modal_cantidad').val());
@@ -154,8 +175,9 @@ var calcular_factura = function(){
       var cantidad = $(this).find("#id_producto_cantidad").val();
       var precio = $(this).find("#id_producto_precio").val();
       var descuento = parseFloat($(this).find("#id_producto_descuento").val());
+      var total_descuento = (cantidad*precio)-(cantidad*descuento);
 
-      $(this).find("#id_total").val((cantidad*precio)-(cantidad*descuento));
+      $(this).find("#id_total").val(total_descuento.toFixed(2));
 
       Subtotal += cantidad * precio;
       Descuento += (cantidad*descuento);
@@ -208,9 +230,6 @@ var get_descuento = function(){
     $(this).val((parseFloat($('#modal_precio_1').val()) * percent).toFixed(2));
   }
 }
-var guardar_documento = function(){
-  console.log(hola);
-}
 
 $(document).on('ready', function(){
     $('#id_cliente_nombre').on('keyup', complete_cliente);
@@ -222,10 +241,11 @@ $(document).on('ready', function(){
     $('#id_al').on('change', calcular_factura);
     $('#id_excento').on('change', calcular_factura);
     $('#modal_cantidad').on('focus', $(this).select());
-    $('#id_guardar_factura').on('click', guardar_documento);
     $('#id_close_modal').on('click', quitar_fila);
     $('#modal_delete').on('click', eliminar_producto);
     $('#modal_descuento_1').on('change', get_descuento);
-
-
+    $('form').on('submit', function(event){
+      event.preventDefault();
+      $(this).preventDefault();
+    });
 });
