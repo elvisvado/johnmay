@@ -38,8 +38,7 @@ def grabar_factura(request):
     f.tipodoc = factura()
 
     f.vendedor = request.user
-    f.tipopago = TipoPago.objects.get(
-        id=request.POST.get("factura_tipopago", ""))
+    f.tipopago = TipoPago.objects.get(id=request.POST.get("factura_tipopago", ""))
     f.comentarios = request.POST.get("factura_comentarios", "")
     f.cliente = get_cliente(c)
 
@@ -47,7 +46,9 @@ def grabar_factura(request):
     f.descuento = float(request.POST.get("factura_descuento", "0.0"))
     f.iva = float(request.POST.get("factura_iva", "0.0"))
     f.total = float(request.POST.get("factura_total", "0.0"))
-    f.retencion = float(request.POST.get("factura_retencion", "0.0"))
+    f.costo = float(request.POST.get("factura_costo", "0.0"))
+    f.factor = (f.subtotal - f.descuento) / f.costo
+    f.utilidad = (f.subtotal - f.descuento) - f.costo
 
     f.save()
     f.aplicar()
@@ -57,6 +58,7 @@ def grabar_factura(request):
 
 def grabar_detalle(request, factura):
     t = len(request.POST.getlist('producto_codigo', ''))
+    d = Factura()
     data = []
     for i in range(0, t):
         dd = Detalle()

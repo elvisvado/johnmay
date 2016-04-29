@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="/static/facturacion/css/style.css">        
+        <link rel="stylesheet" href="/static/facturacion/css/style.css">
     </head>
     <body>
         <div class="container-fluid well">
@@ -75,6 +75,7 @@
                                     <input type="checkbox"  id="id_excento" name="excento"> Exento IVA
                                 </label>
                             </div>
+                            <input type="input" class="form-control" id="id_factura_costo" readonly name="factura_costo" value="0.0">
                         </div>
                         <div class="form-group">
                             <label for="id_factura_comentario">Comentarios</label>
@@ -117,6 +118,7 @@
                                 <th>DESCRIPCION</th>
                                 <th>BODEGA</th>
                                 <th>CANTIDAD</th>
+                                <th>COSTO UNIT</th>
                                 <th>PRECIO UNIT</th>
                                 <th>DESCUENTO UNIT</th>
                                 <th>TOTAL</th>

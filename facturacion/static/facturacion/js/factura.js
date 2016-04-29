@@ -39,6 +39,7 @@ var create_row = function(obj){
     row.append($('<td><input type="input" id="id_producto_nombre" class="form-control" readonly name="producto_nombre" value="'+obj.name+'"></td>'));
     row.append($('<td><input type="input" id="id_producto_bodega" class="form-control" readonly name="producto_bodega" value="0"></td>'));
     row.append($('<td><input type="input" id="id_producto_cantidad" class="form-control" readonly name="producto_cantidad" value="1"></td>'));
+    row.append($('<td><input type="input" id="id_producto_costo" class="form-control" readonly name="producto_costo" value="'+obj.costo+'"></td>'));
     row.append($('<td><input type="input" id="id_producto_precio" class="form-control" readonly name="producto_precio" value="'+obj.precio+'"></td>'));
     row.append($('<td><input type="input" id="id_producto_descuento" class="form-control" readonly name="producto_descuento" value="0"></td>'));
     row.append($('<td><input type="input" id="id_total" class="form-control" readonly name="producto_total" value="'+obj.precio+'"></td>'));
@@ -169,18 +170,21 @@ var calcular_factura = function(){
   var Iva = 0;
   var Retencion = 0;
   var Total = 0;
+  var Costo = 0;
 
   $('#productos>tbody tr').each(function(){
       $this = $(this);
       var cantidad = $(this).find("#id_producto_cantidad").val();
       var precio = $(this).find("#id_producto_precio").val();
       var descuento = parseFloat($(this).find("#id_producto_descuento").val());
+      var costo = parseFloat($(this).find("#id_producto_costo").val());
       var total_descuento = (cantidad*precio)-(cantidad*descuento);
 
       $(this).find("#id_total").val(total_descuento.toFixed(2));
 
       Subtotal += cantidad * precio;
-      Descuento += (cantidad*descuento);
+      Descuento += cantidad * descuento;
+      Costo += cantidad * costo;
   });
 
   if($('#id_excento').is(':checked')) {
@@ -205,6 +209,7 @@ var calcular_factura = function(){
   $("#id_factura_iva").val(Iva.toFixed(2));
   $("#id_factura_retencion").val(Retencion.toFixed(2));
   $("#id_factura_total").val(Total.toFixed(2));
+  $("#id_factura_costo").val(Costo.toFixed(2));
   }
 var quitar_fila = function(){
   var modal = $('#myModal');
@@ -244,8 +249,7 @@ $(document).on('ready', function(){
     $('#id_close_modal').on('click', quitar_fila);
     $('#modal_delete').on('click', eliminar_producto);
     $('#modal_descuento_1').on('change', get_descuento);
-    $('form').on('submit', function(event){
+    /*$('form').on('submit', function(event){
       event.preventDefault();
-      $(this).preventDefault();
-    });
+    });*/
 });
