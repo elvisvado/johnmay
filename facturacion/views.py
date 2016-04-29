@@ -80,7 +80,7 @@ def grabar_detalle(request, factura):
         dd.costo_total = dd.producto_cantidad * dd.producto_costo_unitario
         dd.descuento_total = dd.producto_cantidad * dd.producto_descuento_unitario
         dd.utilidad = (dd.precio_total - dd.descuento_total) - dd.costo_total
-        dd.factor = (dd.precio_total - dd.descuento_total) / dd.costo_total
+        dd.factor = round((dd.precio_total - dd.descuento_total) / dd.costo_total, 2)
 
         dd.save()
         e.save()

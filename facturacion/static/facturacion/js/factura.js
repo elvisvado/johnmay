@@ -44,7 +44,6 @@ var create_row = function(obj){
     row.append($('<td><input type="input" id="id_producto_descuento" class="form-control" readonly name="producto_descuento" value="0"></td>'));
     row.append($('<td><input type="input" id="id_total" class="form-control" readonly name="producto_total" value="'+obj.precio+'"></td>'));
     var oculta = $('<td></td>');
-    oculta.append($('<input type="hidden" id="producto_id" name="producto"></input>'));
     oculta.append($('<input type="hidden" id="bodega_id" name="bodega"></input>'));
     row.append(oculta);
     //$('#productos tbody').append(row);
@@ -87,17 +86,19 @@ var load_modal = function(row){
     var obj = JSON.parse($(row).data('producto'));
     $('#myModal').data('producto', $(row).data('producto'));
     $('#myModal').data('nuevo', $(row).data('nuevo'));
+    $('#modal_bodega').val(row.find('#bodega_id').val());
     $('#modal_codigo').val(obj.code);
     $('#modal_descripcion').val(obj.name);
     $('#modal_precio_pop').val(obj.precio);
     $('#modal_precio_1').val(row.find('#id_producto_precio').val());
     $('#modal_cantidad').val(row.find('#id_producto_cantidad').val());
     $('#modal_descuento_1').val(row.find('#id_producto_descuento').val());
+    var bodega_id = $(row).find('#bodega_id').val();
 
     $('#msg').empty().append('<span class="alert-danger"></span>');
-
-    load_existencias(obj);
+    load_existencias(obj, bodega_id);
     $('#myModal').modal('show');
+
     try {
         if(parseFloat($(row).find('#producto_precio').val()) == 0){
             $('#modal_precio_1').val(
@@ -110,7 +111,7 @@ var load_modal = function(row){
 
     return row
 }
-var load_existencias = function (obj){
+var load_existencias = function (obj, bodega_id){
     $.ajax("/facturacion/existencias_producto/", {
         type: 'POST',
         data: {'code': obj.code},
@@ -118,13 +119,16 @@ var load_existencias = function (obj){
             var exist = $("#exitencia>tbody");
             exist.empty();
             $.each(data, function(i, o){
-                var row = $('<tr></tr>').data('pk', o.bodega_id);
+                if (bodega_id == o.bodega_id){
+                  var row = $('<tr class="selected"></tr>')
+                } else {
+                  var row = $('<tr></tr>')
+                }
+                row.data('pk', o.bodega_id);
                 row.append($('<td id="bodega_bodega"></td>').html(o.bodega_nombre));
                 row.append($('<td id="bodega_existencia"></td>').html(o.existencia));
                 exist.append(row);
             });
-            $('#modal_bodega').val(undefined);
-            $('#modal_cantidad').val();
         }
     });
 }
@@ -132,7 +136,7 @@ var save_fila = function (){
     var modal = $('#myModal');
     var obj = JSON.parse(modal.data('producto'));
     var row = $('#'+obj.id);
-    row.find('#bodega_id').val($('#exitencia>tbody tr').data('pk'));
+    row.find('#bodega_id').val($('#modal_bodega').val());
     row.find('#id_producto_bodega').val($('#exitencia tbody').find('.selected #bodega_bodega').html());
     row.find('#id_producto_precio').val($('#modal_precio_1').val());
     row.find('#id_producto_cantidad').val($('#modal_cantidad').val());
@@ -187,6 +191,8 @@ var calcular_factura = function(){
       Costo += cantidad * costo;
   });
 
+  $('#id_factura_ir').val('0.0');
+  $('#id_factura_al').val('0.0');
   if($('#id_excento').is(':checked')) {
       Iva = 0;
   } else {
@@ -195,11 +201,13 @@ var calcular_factura = function(){
   if($('#id_ir').is(':checked')) {
     if((Subtotal - Descuento) > 1000){
       Retencion += (Subtotal - Descuento) * 0.02;
+      $('#id_factura_ir').val((Subtotal - Descuento) * 0.02);
     }
   }
   if($('#id_al').is(':checked')) {
     if((Subtotal - Descuento) > 1000){
       Retencion += (Subtotal - Descuento) * 0.01;
+      $('#id_factura_al').val((Subtotal - Descuento) * 0.01);
     }
   }
 
@@ -229,7 +237,7 @@ var eliminar_producto = function() {
     calcular_factura();
 }
 var get_descuento = function(){
-  event.preventDefault();
+  /*event.defaultPrevented();*/
   if($(this).val().match(/(?:%)$/)){
     var percent = parseFloat($(this).val().replace('%','')) / 100;
     $(this).val((parseFloat($('#modal_precio_1').val()) * percent).toFixed(2));

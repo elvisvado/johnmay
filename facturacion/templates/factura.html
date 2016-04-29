@@ -19,7 +19,7 @@
                     <span class='alert-{{ m.1 }}'>{{ m.0 }}</span>
                 {% endfor %}
             </div>
-            <form method="POST" action=".">
+            <form method="POST" action="">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-4">
@@ -75,7 +75,17 @@
                                     <input type="checkbox"  id="id_excento" name="excento"> Exento IVA
                                 </label>
                             </div>
-                            <input type="input" class="form-control" id="id_factura_costo" readonly name="factura_costo" value="0.0">
+                            <div>
+                              <div class="col-xs-12 col-md-3">
+                                <input type="input" class="form-control" id="id_factura_ir" readonly name="factura_ir" value="0.0">
+                              </div>
+                              <div class="col-xs-12 col-md-3">
+                                <input type="input" class="form-control" id="id_factura_al" readonly name="factura_al" value="0.0">
+                              </div>
+                              <div class="col-xs-12 col-md-6">
+                                <input type="input" class="form-control" id="id_factura_costo" readonly name="factura_costo" value="0.0">
+                              </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="id_factura_comentario">Comentarios</label>
@@ -141,10 +151,9 @@
                                 <h4 class="modal-title">Exitencias en Bodega</h4>
                             </div>
                             <div class="modal-body">
-
-								 <!-- Agregando la Fila de los datos del Producto-->
-                                <div class="row">
-                                    <div class='col-md-6'>
+                              <!-- Agregando la Fila de los datos del Producto-->
+                              <div class="row">
+                                <div class='col-md-6'>
                                         <div class="form-group">
                                             <label label_for="descuento">Descuento</label>
                                             <input type="input" class="form-control" readonly="" id="modal_descuento_pop" value=0></input>
