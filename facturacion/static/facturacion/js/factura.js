@@ -260,4 +260,8 @@ $(document).on('ready', function(){
     /*$('form').on('submit', function(event){
       event.preventDefault();
     });*/
+    $("form").submit(function(event){
+       event.preventDefault();
+       event.cancel;
+    });
 });
