@@ -49,11 +49,10 @@ def grabar_factura(request):
     f.costo = float(request.POST.get("factura_costo", "0.0"))
     f.factor = (f.subtotal - f.descuento) / f.costo
     f.utilidad = (f.subtotal - f.descuento) - f.costo
-    f.aplicado = False
 
     f.save()
-    f.aplicar()
-    f.calcular()
+    #f.aplicar()
+    #f.calcular()
     return f
 
 
