@@ -262,6 +262,6 @@ $(document).on('ready', function(){
     });*/
     $("form").submit(function(event){
        event.preventDefault();
-       event.cancel;
+       event.cancel();
     });
 });
