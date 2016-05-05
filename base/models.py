@@ -31,7 +31,7 @@ class Entidad(base_entidad):
 
     def save(self, *args, **kwargs):
         if self.code is None or self.code == '':
-            self.code = (self)
+            self.code = get_code(self)
         super(Entidad, self).save()
 
     class Meta:
