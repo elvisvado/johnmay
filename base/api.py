@@ -126,6 +126,7 @@ def get_documento(obj):
         d.cliente = get_cliente(obj)
     if obj.documento_pago:
         d.tipopago = get_or_create_entidad(TipoPago(), obj.documento_pago)
+    d.aplicado = True
     d.save()
     return d
 
