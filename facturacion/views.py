@@ -50,11 +50,10 @@ def grabar_factura(request):
     f.costo = float(request.POST.get("factura_costo", "0.0"))
     f.factor = (f.subtotal - f.descuento) / f.costo
     f.utilidad = (f.subtotal - f.descuento) - f.costo
-    f.aplicado = False
 
     f.save()
-    #f.aplicar()
-    #f.calcular()
+    f.aplicar()
+    f.calcular()
     return f
 
 
@@ -133,7 +132,7 @@ def autocomplete_entidad(instance, request):
         code = request.GET.get('code', None)
         if term:
             words = querie(term)
-            qs = model.objects.filter(reduce(operator.or_, words))
+            qs = model.objects.filter(reduce(operator.and_, words))
             for obj in qs:
                 obj_json = {}
                 obj_json['label'] = obj.name
