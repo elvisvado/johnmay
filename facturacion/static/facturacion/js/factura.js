@@ -257,7 +257,10 @@ $(document).on('ready', function(){
     $('#id_close_modal').on('click', quitar_fila);
     $('#modal_delete').on('click', eliminar_producto);
     $('#modal_descuento_1').on('change', get_descuento);
-    /*$('form').on('submit', function(event){
-      event.preventDefault();
-    });*/
+    $('form').keydown(function(event){
+      if(event.keyCode==13){
+        event.preventDefault();
+        return false;
+      }
+    });
 });
