@@ -12,6 +12,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
+import operator
 
 
 def factura():
@@ -116,6 +117,13 @@ def facturacion(request):
     return render_to_response(template_name, data, context_instance=context)
 
 
+def querie(sentence):
+    predicates = []
+    for word in sentence.split(" "):
+        predicates.append(('name__icontains', word))
+    return [Q(x) for x in predicates]
+
+
 def autocomplete_entidad(instance, request):
     if request.is_ajax:
         model = type(instance)
@@ -123,10 +131,8 @@ def autocomplete_entidad(instance, request):
         term = request.GET.get('term', None)
         code = request.GET.get('code', None)
         if term:
-            qs = model.objects.filter(
-                Q(code__istartswith=term) |
-                Q(name__icontains=term)
-                )
+            words = querie(term)
+            qs = model.objects.filter(reduce(operator.or_, words))
             for obj in qs:
                 obj_json = {}
                 obj_json['label'] = obj.name
