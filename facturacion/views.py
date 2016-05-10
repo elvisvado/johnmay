@@ -52,8 +52,6 @@ def grabar_factura(request):
     f.aplicado = False
 
     f.save()
-    #f.aplicar()
-    #f.calcular()
     return f
 
 
