@@ -20,7 +20,14 @@
                 {% endfor %}
             </div>
             <form method="POST" action="#id_guardar_factura">
-                {% csrf_token %}
+              {% csrf_token %}
+              <!--NavBar de menu de botones-->
+              <!--<div class= "col-md-4-">
+                <button type="button" class="btn btn-default">
+                  <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                  Guardar
+                </button>
+              </div>-->
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -116,12 +123,26 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group">
-                        <input type="input" class="form-control" id="id_buscador_productos" placeholder="BUSCAR PRODUCTO">
+                  <div class="form-group">
+                    <div class="col-lg-6">
+                      <div class="input-group">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button">
+                            Buscar
+                          </button>
+                        </span>
+                            <input type="text" id="id_buscador_productos"
+                              class="form-control" placeholder="Buscar producto...">
+                      </div>
                     </div>
+                        <!--<input type="input" class="form-control"
+                        id="id_buscador_productos" placeholder="BUSCAR PRODUCTO">-->
                 </div>
+              </div>
                 <div class="row table-responsive">
-                    <table id="productos" class="table table-bordered table-striped table-hover" name="productos">
+                    <table id="productos"
+                      class="table table-bordered table-striped table-hover"
+                      name="productos">
                         <thead>
                             <tr>
                                 <th>CODIGO</th>
