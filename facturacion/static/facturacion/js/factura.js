@@ -243,10 +243,68 @@ var get_descuento = function(){
     $(this).val((parseFloat($('#modal_precio_1').val()) * percent).toFixed(2));
   }
 }
+var get_sumit = function(){
+  document.getElementById("mi_form").submit();
+}
+var grabar_factura = function () {
+  if($('#id_cliente_nombre').val() != ''){
+    var form = $('form');
+    $.ajax('/facturacion/post_facturacion/',{
+      type: 'POST',
+      data: form.serialize(),
+      success: function(data){
+        console.log(data);
+      }
+    })
+    limpiar_cliente();
+    limpiar_datos_factura();
+    limpiar_detalle();
+    $('#mensajes')
+        .empty()
+        .html('<div class="alert alert-success">Factura Grabada con Exito!</div>');
+  }
+  else {
+    $('#mensajes')
+        .empty()
+        .html('<div class="alert alert-danger">No es posible Guardar sin un Nombre de Cliente valido</div>');
+  }
+}
+var limpiar_cliente = function(){
+  $('#id_cliente_nombre').val("")
+  $('#id_cliente_identificacion').val("")
+  $('#id_cliente_email').val("")
+  $('#id_cliente_telefono').val("")
+  $('#id_cliente_code').val("")
+  $('#id_cliente_direccion').val("")
+}
+var limpiar_datos_factura = function(){
+  $('#id_factura_numero').val("")
+  $('#id_factura_fecha').val("")
+  $('#id_factura_ir').val("")
+  $('#id_factura_al').val("")
+  $('#id_factura_costo').val("")
+  $('#id_factura_comentario').val("")
+
+  $('#id_factura_subtotal').val("")
+  $('#id_factura_descuento').val("")
+  $('#id_factura_iva').val("")
+  $('#id_factura_retencion').val("")
+  $('#id_factura_total').val("")
+
+  $('#id_buscador_productos').val("")
+
+  $("#id_excento").prop("checked", "");
+  $("#id_al").prop("checked", "");
+  $("#id_ir").prop("checked", "");
+}
+var limpiar_detalle = function(){
+  $('#productos tbody').empty();
+}
 
 $(document).on('ready', function(){
     $('#id_cliente_nombre').on('keyup', complete_cliente);
     $('#id_buscador_productos').on('keyup', complete_producto);
+    $('#id_buscar_prosductos_btn').on('click', complete_producto);
     $('#productos tbody').on('dblclick', '.detalle', update_fila);
     $('#modal_ok').on('click', validar_modal);
     $('#exitencia').on('click', 'tr', selected_fila);
@@ -257,6 +315,7 @@ $(document).on('ready', function(){
     $('#id_close_modal').on('click', quitar_fila);
     $('#modal_delete').on('click', eliminar_producto);
     $('#modal_descuento_1').on('change', get_descuento);
+    $('#id_guardar_factura').on('click', grabar_factura);
     $('form').keydown(function(event){
       if(event.keyCode==13){
         event.preventDefault();
