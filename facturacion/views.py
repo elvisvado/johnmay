@@ -12,7 +12,6 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
-import operator
 
 
 def factura():
@@ -36,7 +35,7 @@ def grabar_factura(request):
     f.fecha = datetime.now()
     f.user = request.user
     f.sucursal = request.user.sucursal
-    f.tipodoc = factura()
+    f.tipodoc = TipoDoc.objects.get(name='FACTURA')
 
     f.vendedor = request.user
     f.tipopago = TipoPago.objects.get(id=request.POST.get("factura_tipopago", ""))
@@ -58,7 +57,7 @@ def grabar_factura(request):
 
 def grabar_detalle(request, factura):
     t = len(request.POST.getlist('producto_codigo', ''))
-    d = Factura()
+    print(t)
     data = []
     for i in range(0, t):
         dd = Detalle()
@@ -115,12 +114,12 @@ def facturacion(request):
             data['mensajes'] = validacion['mensajes']
     return render_to_response(template_name, data, context_instance=context)
 
-
-def querie(sentence):
-    predicates = []
-    for word in sentence.split(" "):
-        predicates.append(('name__icontains', word))
-    return [Q(x) for x in predicates]
+def post_facturacion(request):
+    data = {}
+    data['cabecera'] = grabar_factura(request)
+    data['detalle'] = grabar_detalle(request, data['cabecera'])
+    data = json.dumps(data)
+    return HttpResponse(data, content_type='application/json')
 
 
 def autocomplete_entidad(instance, request):
@@ -130,8 +129,10 @@ def autocomplete_entidad(instance, request):
         term = request.GET.get('term', None)
         code = request.GET.get('code', None)
         if term:
-            words = querie(term)
-            qs = model.objects.filter(reduce(operator.and_, words))
+            qs = model.objects.filter(
+                Q(code__istartswith=term) |
+                Q(name__icontains=term)
+                )
             for obj in qs:
                 obj_json = {}
                 obj_json['label'] = obj.name
