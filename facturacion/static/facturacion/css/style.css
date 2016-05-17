@@ -1,12 +1,18 @@
 .btn-remove {
     text-align: center;
+}
+body {
+    background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
     }
-    body {
-        background-size: cover;
-        -moz-background-size: cover;
-        -webkit-background-size: cover;
-        -o-background-size: cover;
-        }
-        .selected {
-            background-color: lightblue !important;
-            }
+.selected {
+    background-color: lightblue !important;
+}
+#cuerpo{
+  margin-top: 50px;
+}
+.detalle-position{
+  margin-top: 30px;
+}
