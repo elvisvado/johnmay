@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
     <head>
         {% load staticfiles %}
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,21 +14,32 @@
         <link rel="stylesheet" href="/static/facturacion/css/style.css">
     </head>
     <body>
-        <div class="container-fluid well">
+        <!--NavBar de menu de botones-->
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/facturacion">Facturación</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <button type="submit" class="btn btn-default navbar-btn" id="id_guardar_factura">
+                                Grabar
+                            </button>
+                        </li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+        <div class="container-fluid well" id="cuerpo">
             <div id="mensajes">
                 {% for m in mensajes %}
-                    <span class='alert-{{ m.1 }}'>{{ m.0 }}</span>
+                  <span class='alert-{{ m.1 }}'>{{ m.0 }}</span>
                 {% endfor %}
             </div>
             <form method="POST" action="#id_guardar_factura">
-              {% csrf_token %}
-              <!--NavBar de menu de botones-->
-              <!--<div class= "col-md-4-">
-                <button type="button" class="btn btn-default">
-                  <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                  Guardar
-                </button>
-              </div>-->
+                {% csrf_token %}
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -52,97 +64,95 @@
                             <textarea class="form-control" id="id_cliente_direccion" placeholder="DIRECCION" name="cliente_direccion"></textarea>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="id_factura_numero">Numero</label>
-                            <input type="input" class="form-control" id="id_factura_numero" readonly name="factura_numero">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_factura_numero">Numero</label>
+                        <input type="input" class="form-control" id="id_factura_numero" readonly name="factura_numero">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_factura_fecha">Fecha</label>
+                        <input type="text" class="form-control" id="id_factura_fecha" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_factura_tipopago">Tipo de pago</label>
+                        <select id="id_factura_tipopago" class="form-control" name="factura_tipopago">
+                            {% for t in tipopagos %}
+                            <option value={{ t.id }}>{{ t.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <!--<label for="retenciones">Aplicar Retencion</label>-->
+                    <div class="form-group" id="retenciones">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="id_ir" name="factura_ir"> IR
+                            </label>
+                            <label>
+                                <input type="checkbox"  id="id_al" name="factura_al"> Alcaldia
+                            </label>
+                            <label>
+                                <input type="checkbox"  id="id_excento" name="excento"> Exento IVA
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <label for="id_factura_fecha">Fecha</label>
-                            <input type="text" class="form-control" id="id_factura_fecha" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="id_factura_tipopago">Tipo de pago</label>
-                            <select id="id_factura_tipopago" class="form-control" name="factura_tipopago">
-                                {% for t in tipopagos %}
-                                <option value={{ t.id }}>{{ t.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <label for="retenciones">Aplicar Retencion</label>
-                        <div class="form-group" id="retenciones">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" id="id_ir" name="factura_ir"> IR
-                                </label>
-                                <label>
-                                    <input type="checkbox"  id="id_al" name="factura_al"> Alcaldia
-                                </label>
-                                <label>
-                                    <input type="checkbox"  id="id_excento" name="excento"> Exento IVA
-                                </label>
-                            </div>
-                            <div>
-                              <div class="col-xs-12 col-md-3">
+                        <div>
+                            <div class="col-xs-12 col-md-3">
                                 <input type="input" class="form-control" id="id_factura_ir" readonly name="factura_ir" value="0.0">
-                              </div>
-                              <div class="col-xs-12 col-md-3">
-                                <input type="input" class="form-control" id="id_factura_al" readonly name="factura_al" value="0.0">
-                              </div>
-                              <div class="col-xs-12 col-md-6">
-                                <input type="input" class="form-control" id="id_factura_costo" readonly name="factura_costo" value="0.0">
-                              </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="id_factura_comentario">Comentarios</label>
-                            <textarea class="form-control" id="id_factura_comentario" name="factura_comentarios"></textarea>
+                            <div class="col-xs-12 col-md-3">
+                                <input type="input" class="form-control" id="id_factura_al" readonly name="factura_al" value="0.0">
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <input type="input" class="form-control" id="id_factura_costo" readonly name="factura_costo" value="0.0">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="id_factura_subtotal">Subtotal</label>
-                            <input type="input" class="form-control" id="id_factura_subtotal" readonly name="factura_subtotal" value="0.0">
-                        </div>
-                        <div class="form-group">
-                            <label for="id_factura_descuento">Descuento</label>
-                            <input type="input" class="form-control" id="id_factura_descuento" readonly name="factura_descuento" value="0.0">
-                        </div>
-                        <div class="form-group">
-                            <label for="id_factura_iva">Iva</label>
-                            <input type="input" class="form-control" id="id_factura_iva" readonly name="factura_iva" value="0.0">
-                        </div>
-                        <div class="form-group">
-                            <label for="id_factura_retencion">Monto Retenido</label>
-                            <input type="input" class="form-control" id="id_factura_retencion" readonly name="factura_retencion" value="0.0">
-                        </div>
-                        <div class="form-group">
-                            <label for="id_factura_total">Total</label>
-                            <input type="input" class="form-control" id="id_factura_total" readonly name="factura_total" value="0.0">
-                        </div>
+                    <div class="form-group">
+                        <label for="id_factura_comentario">Comentarios</label>
+                        <textarea class="form-control" id="id_factura_comentario" name="factura_comentarios"></textarea>
                     </div>
                 </div>
-                <div class="row">
-                  <div class="form-group">
-                    <div class="col-lg-6">
-                      <div class="input-group">
-                        <span class="input-group-btn">
-                          <button class="btn btn-default" type="button">
-                            Buscar
-                          </button>
-                        </span>
-                            <input type="text" id="id_buscador_productos"
-                              class="form-control" placeholder="Buscar producto...">
-                      </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_factura_subtotal">Subtotal</label>
+                        <input type="input" class="form-control" id="id_factura_subtotal" readonly name="factura_subtotal" value="0.0">
                     </div>
+                    <div class="form-group">
+                        <label for="id_factura_descuento">Descuento</label>
+                        <input type="input" class="form-control" id="id_factura_descuento" readonly name="factura_descuento" value="0.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_factura_iva">Iva</label>
+                        <input type="input" class="form-control" id="id_factura_iva" readonly name="factura_iva" value="0.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_factura_retencion">Monto Retenido</label>
+                        <input type="input" class="form-control" id="id_factura_retencion" readonly name="factura_retencion" value="0.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_factura_total">Total</label>
+                        <input type="input" class="form-control" id="id_factura_total" readonly name="factura_total" value="0.0">
+                    </div>
+                </div>
+            </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button id="id_buscar_prosductos_btn" class="btn btn-default" type="button">
+                                        Buscar
+                                    </button>
+                                </span>
+                                <input type="text" id="id_buscador_productos"
+                                    class="form-control" placeholder="Buscar producto...">
+                            </div>
+                        </div>
                         <!--<input type="input" class="form-control"
                         id="id_buscador_productos" placeholder="BUSCAR PRODUCTO">-->
+                    </div>
                 </div>
-              </div>
-                <div class="row table-responsive">
-                    <table id="productos"
-                      class="table table-bordered table-striped table-hover"
-                      name="productos">
+                <div class="row table-responsive detalle-position">
+                    <table id="productos" class="table table-bordered table-striped table-hover" name="productos">
                         <thead>
                             <tr>
                                 <th>CODIGO</th>
@@ -157,71 +167,80 @@
                         </thead>
                         <tbody>
                         </tbody>
-                    </table>
-                </div>
-                <div class="row">
-                    <button type="submit" class="btn btn-success" id="id_guardar_factura">Grabar</button>
-                </div>
-                <!-- Modal  -->
-                <div class="modal fade" id="myModal" role="dialog">
-                    <div class="modal-dialog modal-md">
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" id="id_close_modal" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Exitencias en Bodega</h4>
+                </table>
+            </div>
+            <!--<div class="row">
+                <button type="submit" class="btn btn-success" id="id_guardar_factura">Grabar</button>
+            </div>-->
+            <!-- Modal  -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog modal-md">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" id="id_close_modal" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Exitencias en Bodega</h4>
+                      </div>
+                        <div class="modal-body">
+                        <!-- Agregando la Fila de los datos del Producto-->
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div>
+                              <label label="codigo">Codigo</label>
+                              <input type="input" class="form-control"
+                                readonly="" id="modal_codigo" value=0></input>
+                              <label label="descripcion">Descripcion</label>
+                              <input type="input" class="form-control"
+                                readonly="" id="modal_descripcion" value=0></input>
                             </div>
-                            <div class="modal-body">
-                              <!-- Agregando la Fila de los datos del Producto-->
-                              <div class="row">
-                                <div class='col-md-6'>
-                                        <div class="form-group">
-                                            <label label_for="descuento">Descuento</label>
-                                            <input type="input" class="form-control" readonly="" id="modal_descuento_pop" value=0></input>
-                                            <label label_for="precio">Precio</label>
-                                            <input type="input" class="form-control" readonly="" id="modal_precio_pop" value=0></input>
-                                        </div>
-                                    </div>
-                                    <div class='col-md-6'>
+                          </div>
+                          <div class='col-md-6'>
+                            <div class="form-group">
+                                <label label_for="descuento">Descuento</label>
+                                <input type="input" class="form-control" readonly="" id="modal_descuento_pop" value=0></input>
+                                <label label_for="precio">Precio</label>
+                                <input type="input" class="form-control" readonly="" id="modal_precio_pop" value=0></input>
+                            </div>
+                          </div>
+                          <div class='col-md-6'>
+                            <div class="form-group">
+                              <label label_for="descuento_1">Aplicar Descuento</label>
+                              <input type="input" class="form-control" id="modal_descuento_1" value=0></input>
+                              <label label_for="precio_1">Aplicar Precio</label>
+                              <input type="input" class="form-control" id="modal_precio_1" value=0></input>
+                            </div>
+                          </div>
+                        </div>
+                        <!--End Fila de datos-->
+                            <div class="row">
+                                <div class='col-md-12'>
+                                    <div id="msg"></div>
+                                    <table  id="exitencia" class="table table-bordered table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Bodega</th>
+                                                <th>Exitencias</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
                                     <div class="form-group">
-                                            <label label_for="descuento_1">Aplicar Descuento</label>
-                                            <input type="input" class="form-control" id="modal_descuento_1" value=0></input>
-                                            <label label_for="precio_1">Aplicar Precio</label>
-                                            <input type="input" class="form-control" id="modal_precio_1" value=0></input>
-                                        </div>
+                                        <label for="cantidad">Cantidad</label>
+                                        <input type="input" class="form-control" id="modal_cantidad"></input>
+                                        <input type="hidden" class="form-control" id="modal_bodega" value="None"></input>
                                     </div>
                                 </div>
-                                <!--End Fila de datos-->
-                                <div class="row">
-                                    <div class='col-md-12'>
-                                        <div id="msg"></div>
-                                        <table  id="exitencia" class="table table-bordered table-striped table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>Bodega</th>
-                                                    <th>Exitencias</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                        <div class="form-group">
-                                            <label for="cantidad">Cantidad</label>
-                                            <input type="input" class="form-control" id="modal_cantidad"></input>
-                                            <input type="hidden" class="form-control" id="modal_bodega" value="None"></input>
-                                        </div>
-                                    </div>
-								</div>
-							</div>
-							<p>Si los campos precio y descuento son distintos al de sistema la factura no caera a caja si a un apartado de autorizacion</p>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-danger" id="modal_delete">Borrar Producto</button>
-                <button type="button" class="btn btn-success" id="modal_ok">Agregar Producto</button>
-							</div>
 						</div>
 					</div>
+          <div class="modal-footer">
+						<button type="button" class="btn btn-danger" id="modal_delete">Borrar Producto</button>
+            <button type="button" class="btn btn-success" id="modal_ok">Agregar Producto</button>
+					</div>
 				</div>
-				</div>
+			</div>
+		</div>
+		</div>
 <!-- End Modal -->
 </form>
 </div>

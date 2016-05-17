@@ -12,4 +12,6 @@ urlpatterns = patterns('facturacion.views',
     url(r'^datos_cliente/$', 'datos_cliente', name='datos_cliente'),
     url(r'^existencias_producto/$', 'existencias_producto',
         name='existencias_producto'),
+    url(r'^post_facturacion/$', 'post_facturacion',
+        name='post_facturacion'),
 )
