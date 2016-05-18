@@ -167,82 +167,80 @@
                                 <th>TOTAL</th>
                             </tr>
                         </thead>
-                </table>
-            </div>
-            <!--<div class="row">
-                <button type="submit" class="btn btn-success" id="id_guardar_factura">Grabar</button>
-            </div>-->
-            <!-- Modal  -->
-            <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog modal-md">
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                      <div class="modal-header">
-                          <button type="button" class="close" id="id_close_modal" data-dismiss="modal">&times;</button>
-                          <h4 class="modal-title">Exitencias en Bodega</h4>
-                      </div>
-                        <div class="modal-body">
-                        <!-- Agregando la Fila de los datos del Producto-->
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div>
-                              <label label="codigo">Codigo</label>
-                              <input type="input" class="form-control"
-                                readonly="" id="modal_codigo" value=0></input>
-                              <label label="descripcion">Descripcion</label>
-                              <input type="input" class="form-control"
-                                readonly="" id="modal_descripcion" value=0></input>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <!--<div class="row">
+                    <button type="submit" class="btn btn-success" id="id_guardar_factura">Grabar</button>
+                </div>-->
+                <!-- Modal  -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog modal-md">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" id="id_close_modal" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Exitencias en Bodega</h4>
                             </div>
-                          </div>
-                          <div class='col-md-6'>
-                            <div class="form-group">
-                                <label label_for="descuento">Descuento</label>
-                                <input type="input" class="form-control" readonly="" id="modal_descuento_pop" value=0></input>
-                                <label label_for="precio">Precio</label>
-                                <input type="input" class="form-control" readonly="" id="modal_precio_pop" value=0></input>
-                            </div>
-                          </div>
-                          <div class='col-md-6'>
-                            <div class="form-group">
-                              <label label_for="descuento_1">Aplicar Descuento</label>
-                              <input type="input" class="form-control" id="modal_descuento_1" value=0></input>
-                              <label label_for="precio_1">Aplicar Precio</label>
-                              <input type="input" class="form-control" id="modal_precio_1" value=0></input>
-                            </div>
-                          </div>
-                        </div>
-                        <!--End Fila de datos-->
-                            <div class="row">
-                                <div class='col-md-12'>
-                                    <div id="msg"></div>
-                                    <table  id="exitencia" class="table table-bordered table-striped table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Bodega</th>
-                                                <th>Exitencias</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                    <div class="form-group">
-                                        <label for="cantidad">Cantidad</label>
-                                        <input type="input" class="form-control" id="modal_cantidad"></input>
-                                        <input type="hidden" class="form-control" id="modal_bodega" value="None"></input>
+                            <div class="modal-body">
+                                <!-- Agregando la Fila de los datos del Producto-->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div>
+                                            <label labe="codigo">Codigo</label>
+                                            <input type="input" class="form-control" readonly="" id="modal_codigo" value=0></input>
+                                            <label label="descripcion">Descripcion</label>
+                                            <input type="input" class="form-control" readonly="" id="modal_descripcion" value=0></input>
+                                        </div>
+                                    </div>
+                                    <div class='col-md-6'>
+                                        <div class="form-group">
+                                            <label label_for="descuento">Descuento</label>
+                                            <input type="input" class="form-control" readonly="" id="modal_descuento_pop" value=0></input>
+                                            <label label_for="precio">Precio</label>
+                                            <input type="input" class="form-control" readonly="" id="modal_precio_pop" value=0></input>
+                                        </div>
+                                    </div>
+                                    <div class='col-md-6'>
+                                        <div class="form-group">
+                                            <label label_for="descuento_1">Aplicar Descuento</label>
+                                            <input type="input" class="form-control" id="modal_descuento_1" value=0></input>
+                                            <label label_for="precio_1">Aplicar Precio</label>
+                                            <input type="input" class="form-control" id="modal_precio_1" value=0></input>
+                                        </div>
                                     </div>
                                 </div>
-						</div>
-					</div>
-          <div class="modal-footer">
-						<button type="button" class="btn btn-danger" id="modal_delete">Borrar Producto</button>
-            <button type="button" class="btn btn-success" id="modal_ok">Agregar Producto</button>
-					</div>
-				</div>
-			</div>
+                                <!--End Fila de datos-->
+                                <div class="row">
+                                    <div class='col-md-12'>
+                                        <div id="msg"></div>
+                                        <table  id="exitencia" class="table table-bordered table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Bodega</th>
+                                                    <th>Exitencias</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                        <div class="form-group">
+                                            <label for="cantidad">Cantidad</label>
+                                            <input type="input" class="form-control" id="modal_cantidad"></input>
+                                            <input type="hidden" class="form-control" id="modal_bodega" value="None"></input>
+                                        </div>
+                                    </div>
+						        </div>
+					        </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" id="modal_delete">Borrar Producto</button>
+                                <button type="button" class="btn btn-success" id="modal_ok">Agregar Producto</button>
+                            </div>
+				        </div>
+			        </div>
+		        </div>
+                <!-- End Modal -->
+            </form>
 		</div>
-		</div>
-<!-- End Modal -->
-</form>
-</div>
-</body>
+    </body>
 </html>
