@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="es-ES">
     <head>
         {% load staticfiles %}
         <meta charset="utf-8" />
@@ -18,14 +18,22 @@
     <body>
         <!--NavBar de menu de botones-->
         <!-- Fixed navbar -->
-        <nav class="navbar navbar-inverse navbar-fixed-top">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+
+                </div>                
+            </div>
+        </nav>
+
+        <!--<nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     <button type="submit" class="btn btn-default navbar-btn" id="id_guardar_factura">
                         Grabar
                     </button>                    
                 </div>
-                <div id="navbar" class="collapse navbar-collapse navbar-ex1-collapse">
+                <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <a class="navbar-brand" href="/facturacion">Facturación</a>
@@ -33,7 +41,7 @@
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
-        </nav>
+        </nav>-->
         <div class="container-fluid well" id="cuerpo">
             <div id="mensajes">
                 {% for m in mensajes %}
@@ -46,8 +54,8 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="id_cliente_code">CLIENTE</label>
-                            <input type="hidden" class="form-control" id="id_cliente_id" placeholder="CODIGO" name="cliente_id">
-                            <input type="text" class="form-control" id="id_cliente_code" placeholder="CODIGO" name="cliente_code">
+                            <input type="hidden" class="form-control" id="id_cliente_id" placeholder="CODIGO" readonly name="cliente_id">
+                            <input type="text" class="form-control" id="id_cliente_code" placeholder="CODIGO" readonly name="cliente_code">
                         </div>
                         <div class="form-group">
                             <input type="hidden" class="form-control" id="id_cliente_id">
