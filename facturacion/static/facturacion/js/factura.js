@@ -203,7 +203,7 @@ var calcular_factura = function () {
     if ($('#id_ir').is(':checked')) {
         if ((Subtotal - Descuento) > 1000) {
             ir = (Subtotal - Descuento) * 0.02;
-            Retencion += (Subtotal - Descuento) * 0.02;
+            Retencion += ir;
 
             $('#id_factura_ir').val(ir.toFixed(2));
         }
@@ -211,7 +211,7 @@ var calcular_factura = function () {
     if ($('#id_al').is(':checked')) {
         if ((Subtotal - Descuento) > 1000) {
             al = (Subtotal - Descuento) * 0.01;
-            Retencion += al
+            Retencion += al;
 
             $('#id_factura_al').val(al.toFixed(2));
         }
