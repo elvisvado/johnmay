@@ -201,13 +201,13 @@ var calcular_factura = function(){
   if($('#id_ir').is(':checked')) {
     if((Subtotal - Descuento) > 1000){
       Retencion += (Subtotal - Descuento) * 0.02;
-      $('#id_factura_ir').val((Subtotal - Descuento) * 0.02);
+      $('#id_factura_ir').val(((Subtotal - Descuento) * 0.02).toFixed(2));
     }
   }
   if($('#id_al').is(':checked')) {
     if((Subtotal - Descuento) > 1000){
       Retencion += (Subtotal - Descuento) * 0.01;
-      $('#id_factura_al').val((Subtotal - Descuento) * 0.01);
+      $('#id_factura_al').val(((Subtotal - Descuento) * 0.01).toFixed(2));
     }
   }
 
