@@ -1,6 +1,6 @@
 from django.db import models
 from base.base import base_documento, base_producto, base_cliente
-from base.api import get_detalle
+from base.api import *
 from base.models import Existencia
 
 
