@@ -13,6 +13,8 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <script type="text/javascript" href="/static/moment.min.js"></script>
+        <script type="text/javascript" href="/static/bootstrap-datepicker.js"></script>
         <link rel="stylesheet" href="/static/facturacion/css/style.css">
     </head>
     <body>
@@ -38,7 +40,7 @@
                 <div class="navbar-header">
                     <button type="submit" class="btn btn-default navbar-btn" id="id_guardar_factura">
                         Grabar
-                    </button>                    
+                    </button>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -84,11 +86,14 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="id_factura_numero">Numero</label>
-                        <input type="input" class="form-control" id="id_factura_numero" readonly name="factura_numero">
+                        <input type="input" class="form-control" id="id_factura_numero" name="factura_numero">
                     </div>
-                    <div class="form-group">
-                        <label for="id_factura_fecha">Fecha</label>
-                        <input type="text" class="form-control" id="id_factura_fecha" readonly>
+                    <label for="id_factura_fecha">Fecha</label>
+                    <div class="input-group date" data-provide="datepicker">
+                        <input type="text" class="form-control" name="factura_fecha" id="id_factura_fecha">
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="id_factura_tipopago">Tipo de pago</label>

@@ -328,4 +328,5 @@ $(document).on('ready', function(){
         return false;
       }
     });
+    $('id_factura_fecha').datepicker();
 });
